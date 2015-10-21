@@ -1,7 +1,10 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -32,16 +35,27 @@ public class Algorithms {
         return 0;
     }
 
-    public static List<Vertex> breadthFirstSearch(Graph graph) {
+    public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         // TODO: Implement this method and others
-        List<Vertex> dummyReturn = new LinkedList<Vertex>();
-        return dummyReturn;
+        List<Vertex> vertices = graph.getVertices();
+        //queue for keeping track of what vertex to go to next
+        List<Vertex> tracker =  new LinkedList<Vertex>();
+      
+        Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
+        
+        for (Vertex v : vertices){
+            List<Vertex> outputList = new LinkedList<Vertex>();
+            //do the algorithm
+            outputSet.add(outputList);
+        }
+        
+        return outputSet;
 
     }
 
-    public static List<Vertex> depthFirstSearch(Graph graph) {
+    public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
         // TODO: Implement this method and others
-        List<Vertex> dummyReturn = new LinkedList<Vertex>();
+        Set<List<Vertex>> dummyReturn = new HashSet<List<Vertex>>();
         return dummyReturn;
 
     }

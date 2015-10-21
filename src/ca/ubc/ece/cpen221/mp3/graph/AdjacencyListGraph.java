@@ -11,7 +11,11 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 public class AdjacencyListGraph implements Graph {
     // TODO: Implement this class
 
-    private Map<Vertex, List<Vertex>> listGraph = new HashMap<Vertex, List<Vertex>>();
+    private Map<Vertex, List<Vertex>> listGraph;
+    
+    public AdjacencyListGraph(){
+        listGraph = new HashMap<Vertex, List<Vertex>>();
+    }
 
     /**
      * Adds a vertex to the graph.
