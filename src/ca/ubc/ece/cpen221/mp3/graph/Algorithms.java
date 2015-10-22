@@ -36,20 +36,34 @@ public class Algorithms {
 
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         // TODO: Implement this method and others
-        List<Vertex> vertices = graph.getVertices();
-        // queue for keeping track of what vertex to go to next
-        List<Vertex> tracker = new LinkedList<Vertex>();
-
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
+        /*
+        List<Vertex> vertices = graph.getVertices();
 
         for (Vertex v : vertices) {
             List<Vertex> outputList = new LinkedList<Vertex>();
+            LinkedList<Vertex> queue = new LinkedList<Vertex>();
+            Vertex currentVertex = new Vertex(v.getLabel());
             // do the algorithm
+            do {
+                outputList.add(currentVertex);
+                for (int i = 0; i < graph.getDownstreamNeighbors(currentVertex).size(); i++) {
+                    Vertex currentDownstreamNeighbor = graph.getDownstreamNeighbors(currentVertex).get(i);
+                    queue.addLast(currentDownstreamNeighbor);
+                    if (!(outputList.contains(graph.getDownstreamNeighbors(currentVertex).get(i)))) {
+                        outputList.add(graph.getDownstreamNeighbors(currentVertex).get(i));
+                    }
+                }
+                currentVertex = queue.removeFirst();
+            } while (queue.size() != 0);
+
+            // graph.getDownstreamNeighbors(v);
             outputSet.add(outputList);
+
         }
 
+        */
         return outputSet;
-
     }
 
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
@@ -69,8 +83,7 @@ public class Algorithms {
                     upstreamVertices.add(new Vertex(aDNeighbors.get(i).getLabel()));
                 }
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < bDNeighbors.size(); i++) {
                 if (aDNeighbors.contains(bDNeighbors.get(i))) {
                     upstreamVertices.add(new Vertex(bDNeighbors.get(i).getLabel()));
@@ -90,8 +103,7 @@ public class Algorithms {
                     downstreamVertices.add(new Vertex(aDNeighbors.get(i).getLabel()));
                 }
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < bDNeighbors.size(); i++) {
                 if (aDNeighbors.contains(bDNeighbors.get(i))) {
                     downstreamVertices.add(new Vertex(bDNeighbors.get(i).getLabel()));
