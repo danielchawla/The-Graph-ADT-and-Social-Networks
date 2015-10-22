@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -63,7 +62,6 @@ public class AdjacencyListGraph implements Graph {
         // return list mapped to v
         // who does v follow
         return listGraph.get(v);
-
     }
 
     /**
@@ -86,7 +84,6 @@ public class AdjacencyListGraph implements Graph {
         }
 
         return upstreamNeighbours;
-
     }
 
     /**
