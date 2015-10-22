@@ -8,7 +8,6 @@ import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyMatrixGraph implements Graph {
-    // TODO: Implement this class
 
     // Matrix is essentially an ArrayList of ArrayLists
     List<ArrayList<Boolean>> matrixRows;

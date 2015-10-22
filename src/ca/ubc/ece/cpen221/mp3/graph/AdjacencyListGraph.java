@@ -9,7 +9,6 @@ import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
-    // TODO: Implement this class
 
     private Map<Vertex, List<Vertex>> listGraph;
     

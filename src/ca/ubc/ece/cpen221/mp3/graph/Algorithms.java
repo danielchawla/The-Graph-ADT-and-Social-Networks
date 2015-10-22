@@ -29,7 +29,7 @@ public class Algorithms {
      * @param b
      * @return
      */
-    
+
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
         // TODO: Implement this method and others
         return 0;
@@ -38,17 +38,17 @@ public class Algorithms {
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         // TODO: Implement this method and others
         List<Vertex> vertices = graph.getVertices();
-        //queue for keeping track of what vertex to go to next
-        List<Vertex> tracker =  new LinkedList<Vertex>();
-      
+        // queue for keeping track of what vertex to go to next
+        List<Vertex> tracker = new LinkedList<Vertex>();
+
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
-        
-        for (Vertex v : vertices){
+
+        for (Vertex v : vertices) {
             List<Vertex> outputList = new LinkedList<Vertex>();
-            //do the algorithm
+            // do the algorithm
             outputSet.add(outputList);
         }
-        
+
         return outputSet;
 
     }
@@ -61,17 +61,45 @@ public class Algorithms {
     }
 
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
-        // TODO: Implement this method and others
-        List<Vertex> dummyReturn = new LinkedList<Vertex>();
-        return dummyReturn;
-
+        List<Vertex> upstreamVertices = new LinkedList<Vertex>();
+        List<Vertex> aDNeighbors = graph.getUpstreamNeighbors(a);
+        List<Vertex> bDNeighbors = graph.getUpstreamNeighbors(b);
+        if (aDNeighbors.size() < bDNeighbors.size()) {
+            for (int i = 0; i < aDNeighbors.size(); i++) {
+                if (bDNeighbors.contains(aDNeighbors.get(i))) {
+                    upstreamVertices.add(new Vertex(aDNeighbors.get(i).getLabel()));
+                }
+            }
+        }
+        else{
+            for (int i = 0; i < bDNeighbors.size(); i++) {
+                if (aDNeighbors.contains(bDNeighbors.get(i))) {
+                    upstreamVertices.add(new Vertex(bDNeighbors.get(i).getLabel()));
+                }
+            }
+        }
+        return upstreamVertices;
     }
 
     public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
-        // TODO: Implement this method and others
-        List<Vertex> dummyReturn = new LinkedList<Vertex>();
-        return dummyReturn;
-
+        List<Vertex> downstreamVertices = new LinkedList<Vertex>();
+        List<Vertex> aDNeighbors = graph.getDownstreamNeighbors(a);
+        List<Vertex> bDNeighbors = graph.getDownstreamNeighbors(b);
+        if (aDNeighbors.size() < bDNeighbors.size()) {
+            for (int i = 0; i < aDNeighbors.size(); i++) {
+                if (bDNeighbors.contains(aDNeighbors.get(i))) {
+                    downstreamVertices.add(new Vertex(aDNeighbors.get(i).getLabel()));
+                }
+            }
+        }
+        else{
+            for (int i = 0; i < bDNeighbors.size(); i++) {
+                if (aDNeighbors.contains(bDNeighbors.get(i))) {
+                    downstreamVertices.add(new Vertex(bDNeighbors.get(i).getLabel()));
+                }
+            }
+        }
+        return downstreamVertices;
     }
 
 }
