@@ -50,7 +50,7 @@ public class AlgorithmsTests {
     }
 
     @Test
-    public void test() {
+    public void breadthFirstSearchTest() {
         testGraph.addVertex(a);
         testGraph.addVertex(b);
         testGraph.addVertex(s);
@@ -90,6 +90,44 @@ public class AlgorithmsTests {
         
         assert(BFSout.contains(aExpectedOut));
         
+    }
+    @Test
+    public void shortestDistanceTest() {
+        testGraph.addVertex(a);
+        testGraph.addVertex(b);
+        testGraph.addVertex(s);
+        testGraph.addVertex(c);
+        testGraph.addVertex(d);
+        testGraph.addVertex(e);
+        testGraph.addVertex(f);
+        testGraph.addVertex(g);
+        testGraph.addVertex(h);
+        
+        testGraph.addEdge(a, b);
+        testGraph.addEdge(a, s);
+        
+        testGraph.addEdge(s, c);
+        testGraph.addEdge(s, g);
+        
+        testGraph.addEdge(c, d);
+        testGraph.addEdge(c, e);
+        testGraph.addEdge(c, f);
+        
+        testGraph.addEdge(g, f);
+        testGraph.addEdge(g, h);
+        
+        testGraph.addEdge(e, h);
+        
+        assertEquals(1,Algorithms.shortestDistance(testGraph, a, b));
+        assertEquals(1,Algorithms.shortestDistance(testGraph, a, s));
+        assertEquals(2,Algorithms.shortestDistance(testGraph, a, c));
+        assertEquals(3,Algorithms.shortestDistance(testGraph, a, d));
+        assertEquals(0,Algorithms.shortestDistance(testGraph, a, a));
+        assertEquals(3,Algorithms.shortestDistance(testGraph, a, h));
+        assertEquals(0,Algorithms.shortestDistance(testGraph, b, h));
+        assertEquals(2,Algorithms.shortestDistance(testGraph, c, h));
+        assertEquals(0,Algorithms.shortestDistance(testGraph, f, h));
+
     }
 
 }

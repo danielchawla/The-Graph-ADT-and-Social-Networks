@@ -1,8 +1,10 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
@@ -29,36 +31,57 @@ public class Algorithms {
      * @return
      */
 
+    // using the bones of the BFS but not the actual method call
+    // because it would be stupid return BFS for all the data instead of just on
+    // the specific vertex
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-        // TODO: Implement this method and others
-        int counter = 0;
-        
-        List<Vertex> outputList = new LinkedList<Vertex>();
+        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        Map<Vertex, Vertex> visits = new HashMap<Vertex, Vertex>();
         Vertex currentVertex = a;
-        Vertex endVertex = b;
-        // do the algorithm
-
-        outputList.add(currentVertex);
-
-        while (true) {
-            for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
-                queue.add(indexV);
-                if (!outputList.contains(indexV)) {
-                    outputList.add(indexV);
-                }
-            }
-            if (queue.size() == 0) break;
-            currentVertex = queue.remove(0);
+        Vertex currentVertex2 = b;
+        int count = 0;
+        //special case
+        if (a.equals(b)) return count;
+ 
+        for (Vertex v : graph.getVertices()) {
+            visitTable.put(new Vertex(v.getLabel()), false);
         }
         
-        return 0;
+        //initial cases
+        visits.put(a, a);
+        visitTable.replace(a, true);
+        
+        while (true) {
+            for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
+                if (!visitTable.get(indexV)) {
+                    visitTable.replace(indexV, true);
+                    queue.add(indexV);
+                    visits.put(indexV, currentVertex);
+                }
+            }
+            if (queue.size() == 0)
+                break;
+            currentVertex = queue.remove(0);
+        }
+
+        if (!graph.getDownstreamNeighbors(a).isEmpty()) {
+            while (true) {
+                count++;
+                Vertex prevVertex = visits.get(currentVertex2);
+                if (prevVertex.equals(a))
+                    break;
+                currentVertex2 = prevVertex;
+            }
+        }
+
+        return count;
     }
 
-    //the way this is written right now makes it so that it treats edges
-    //in the wrong direction as not connected
-    //so if you start with a vertex  at the terminus of a branch you will only
-    //visit that vertex
+    // the way this is written right now makes it so that it treats edges
+    // in the wrong direction as not connected
+    // so if you start with a vertex at the terminus of a branch you will only
+    // visit that vertex
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
