@@ -30,7 +30,7 @@ public class AlgorithmsTests {
     Vertex h = new Vertex("h");
     
     Graph testGraph = new AdjacencyListGraph();
-    
+   
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

@@ -41,18 +41,21 @@ public class Algorithms {
         Vertex currentVertex = a;
         Vertex currentVertex2 = b;
         int count = 0;
-        //special case
-        if (a.equals(b)) return count;
- 
+        // special case
+        if (a.equals(b))
+            return count;
+
         for (Vertex v : graph.getVertices()) {
             visitTable.put(new Vertex(v.getLabel()), false);
         }
-        
-        //initial cases
+
+        // initial cases
         visits.put(a, a);
         visitTable.replace(a, true);
-        
-        while (true) {
+        queue.add(currentVertex);
+
+        while (queue.size() !=0) {
+            currentVertex = queue.remove(0);
             for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
                 if (!visitTable.get(indexV)) {
                     visitTable.replace(indexV, true);
@@ -60,9 +63,6 @@ public class Algorithms {
                     visits.put(indexV, currentVertex);
                 }
             }
-            if (queue.size() == 0)
-                break;
-            currentVertex = queue.remove(0);
         }
 
         if (!graph.getDownstreamNeighbors(a).isEmpty()) {
@@ -85,38 +85,32 @@ public class Algorithms {
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
-        System.out.println(graph.getVertices().toString());
+        // System.out.println(graph.getVertices().toString());
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
-        
-        for(Vertex v: vertices){
-            visitTable.put(v,false);
+
+        for (Vertex v : vertices) {
+            visitTable.put(v, false);
         }
 
         for (Vertex v : vertices) {
             List<Vertex> outputList = new LinkedList<Vertex>();
             LinkedList<Vertex> queue = new LinkedList<Vertex>();
             Vertex currentVertex = v;
-            // do the algorithm
 
             outputList.add(currentVertex);
             visitTable.replace(currentVertex, true);
-            
-            // System.out.println("start vertex " + currentVertex.getLabel());
-            while (true) {
+            queue.add(currentVertex);
+
+            while (queue.size() != 0) {
+                currentVertex = queue.removeFirst();
                 for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
                     queue.add(indexV);
-                    System.out.println("added to queue "+ indexV.getLabel());
-                    if(!visitTable.get(indexV)){
-                    outputList.add(indexV);
-                    visitTable.replace(indexV, true);
-                    System.out.println(indexV.getLabel());
+
+                    if (!visitTable.get(indexV)) {
+                        outputList.add(indexV);
+                        visitTable.replace(indexV, true);
                     }
                 }
-                if (queue.size() == 0)
-                    break;
-                currentVertex = queue.removeFirst();
-                // System.out.println("next start vertex
-                // "+currentVertex.getLabel());
             }
 
             outputSet.add(outputList);
