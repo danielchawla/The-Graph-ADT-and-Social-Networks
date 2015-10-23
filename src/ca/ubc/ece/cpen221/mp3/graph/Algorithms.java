@@ -86,6 +86,11 @@ public class Algorithms {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
         System.out.println(graph.getVertices().toString());
+        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
+        
+        for(Vertex v: vertices){
+            visitTable.put(v,false);
+        }
 
         for (Vertex v : vertices) {
             List<Vertex> outputList = new LinkedList<Vertex>();
@@ -94,14 +99,17 @@ public class Algorithms {
             // do the algorithm
 
             outputList.add(currentVertex);
+            visitTable.replace(currentVertex, true);
+            
             // System.out.println("start vertex " + currentVertex.getLabel());
             while (true) {
                 for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
                     queue.add(indexV);
-                    // System.out.println("added to queue "+ indexV.getLabel());
-                    if (!outputList.contains(indexV)) {
-                        outputList.add(indexV);
-                        // System.out.println(indexV.getLabel());
+                    System.out.println("added to queue "+ indexV.getLabel());
+                    if(!visitTable.get(indexV)){
+                    outputList.add(indexV);
+                    visitTable.replace(indexV, true);
+                    System.out.println(indexV.getLabel());
                     }
                 }
                 if (queue.size() == 0)
