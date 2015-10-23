@@ -6,9 +6,9 @@ import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListTests {
-    private final static Vertex bob = new Vertex("Bob");
-    private final static Vertex mary = new Vertex("Mary");
-    private final static Vertex frank = new Vertex("Frank");
+    private final Vertex bob = new Vertex("Bob");
+    private final Vertex mary = new Vertex("Mary");
+    private final Vertex frank = new Vertex("Frank");
 
     /**
      * Tests addVertext method and getVertices method of AdjencyListTests.
