@@ -31,38 +31,66 @@ public class Algorithms {
 
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
         // TODO: Implement this method and others
+        int counter = 0;
+        
+        List<Vertex> outputList = new LinkedList<Vertex>();
+        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        Vertex currentVertex = a;
+        Vertex endVertex = b;
+        // do the algorithm
+
+        outputList.add(currentVertex);
+
+        while (true) {
+            for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
+                queue.add(indexV);
+                if (!outputList.contains(indexV)) {
+                    outputList.add(indexV);
+                }
+            }
+            if (queue.size() == 0) break;
+            currentVertex = queue.remove(0);
+        }
+        
         return 0;
     }
 
+    //the way this is written right now makes it so that it treats edges
+    //in the wrong direction as not connected
+    //so if you start with a vertex  at the terminus of a branch you will only
+    //visit that vertex
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
-        // TODO: Implement this method and others
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
-        /*
         List<Vertex> vertices = graph.getVertices();
+        System.out.println(graph.getVertices().toString());
 
         for (Vertex v : vertices) {
             List<Vertex> outputList = new LinkedList<Vertex>();
             LinkedList<Vertex> queue = new LinkedList<Vertex>();
-            Vertex currentVertex = new Vertex(v.getLabel());
+            Vertex currentVertex = v;
             // do the algorithm
-            do {
-                outputList.add(currentVertex);
-                for (int i = 0; i < graph.getDownstreamNeighbors(currentVertex).size(); i++) {
-                    Vertex currentDownstreamNeighbor = graph.getDownstreamNeighbors(currentVertex).get(i);
-                    queue.addLast(currentDownstreamNeighbor);
-                    if (!(outputList.contains(graph.getDownstreamNeighbors(currentVertex).get(i)))) {
-                        outputList.add(graph.getDownstreamNeighbors(currentVertex).get(i));
+
+            outputList.add(currentVertex);
+            // System.out.println("start vertex " + currentVertex.getLabel());
+            while (true) {
+                for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
+                    queue.add(indexV);
+                    // System.out.println("added to queue "+ indexV.getLabel());
+                    if (!outputList.contains(indexV)) {
+                        outputList.add(indexV);
+                        // System.out.println(indexV.getLabel());
                     }
                 }
+                if (queue.size() == 0)
+                    break;
                 currentVertex = queue.removeFirst();
-            } while (queue.size() != 0);
+                // System.out.println("next start vertex
+                // "+currentVertex.getLabel());
+            }
 
-            // graph.getDownstreamNeighbors(v);
             outputSet.add(outputList);
-
         }
 
-        */
         return outputSet;
     }
 
