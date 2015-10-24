@@ -11,6 +11,7 @@ public class AdjacencyListGraph implements Graph {
 
     private Map<Vertex, List<Vertex>> listGraph;
     
+    //make this a list of followers
     public AdjacencyListGraph(){
         listGraph = new HashMap<Vertex, List<Vertex>>();
     }
@@ -21,8 +22,8 @@ public class AdjacencyListGraph implements Graph {
      * Precondition: v is not already a vertex in the graph
      */
     public void addVertex(Vertex v) {
-        List<Vertex> following = new LinkedList<Vertex>();
-        listGraph.put(v, following);
+        List<Vertex> followers = new LinkedList<Vertex>();
+        listGraph.put(v, followers);
     }
 
     /**
@@ -30,10 +31,12 @@ public class AdjacencyListGraph implements Graph {
      *
      * Precondition: v1 and v2 are vertices in the graph
      */
-    public void addEdge(Vertex v1, Vertex v2) {
-        // get list mapped to v1 and add v2
-        // v1 follows v2
-        listGraph.get(v1).add(v2);
+    //edge from follower to celeb 
+    //follower is a FOLLOWER of celeb
+    //add follower to celeb's list of followers
+    public void addEdge(Vertex follower, Vertex celeb) {
+
+        listGraph.get(celeb).add(follower);
     }
 
     /**
@@ -42,10 +45,8 @@ public class AdjacencyListGraph implements Graph {
      * Precondition: v1 and v2 are vertices in the graph Postcondition: return
      * true iff an edge from v1 connects to v2
      */
-    public boolean edgeExists(Vertex v1, Vertex v2) {
-        // check list mapped to v1 for v2
-        // does v1 follow v2?
-        return listGraph.get(v1).contains(v2);
+    public boolean edgeExists(Vertex follower, Vertex celeb) {
+        return listGraph.get(celeb).contains(follower);
     }
 
     /**
@@ -58,10 +59,16 @@ public class AdjacencyListGraph implements Graph {
      * (No trailing null elements). This method should return a list of size 0
      * iff v has no downstream neighbors.
      */
-    public List<Vertex> getDownstreamNeighbors(Vertex v) {
-        // return list mapped to v
+    //DOWNSTREAM: all celeb's a user follows
+    public List<Vertex> getDownstreamNeighbors(Vertex follower) {
         // who does v follow
-        return listGraph.get(v);
+        List<Vertex> celebrities = new LinkedList<Vertex>();
+        for (Vertex celeb : listGraph.keySet()) {
+            if (listGraph.get(celeb).contains(follower))
+                celebrities.add(celeb);
+        }
+
+        return celebrities;
     }
 
     /**
@@ -74,16 +81,10 @@ public class AdjacencyListGraph implements Graph {
      * (No trailing null elements). This method should return a list of size 0
      * iff v has no upstream neighbors.
      */
-    public List<Vertex> getUpstreamNeighbors(Vertex v) {
-        // return a list of followers
-
-        List<Vertex> upstreamNeighbours = new LinkedList<Vertex>();
-        for (Vertex vertex : listGraph.keySet()) {
-            if (listGraph.get(vertex).contains(v))
-                upstreamNeighbours.add(vertex);
-        }
-
-        return upstreamNeighbours;
+    //FOLLOWERS OF celeb
+    //GOING BACKWARDS THROUGH AN ARROW
+    public List<Vertex> getUpstreamNeighbors(Vertex celeb) {
+        return listGraph.get(celeb);
     }
 
     /**

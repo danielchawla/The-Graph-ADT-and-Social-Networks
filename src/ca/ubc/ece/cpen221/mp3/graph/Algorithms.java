@@ -51,7 +51,7 @@ public class Algorithms {
             return count;
 
         for (Vertex v : graph.getVertices()) {
-            visitTable.put(new Vertex(v.getLabel()), false);
+            visitTable.put(v, false);
         }
 
         // initial cases
@@ -61,16 +61,17 @@ public class Algorithms {
 
         while (queue.size() != 0) {
             currentVertex = queue.remove(0);
-            for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
+            for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
                 if (!visitTable.get(indexV)) {
                     visitTable.replace(indexV, true);
                     queue.add(indexV);
                     visits.put(indexV, currentVertex);
                 }
+                if(indexV.equals(b)) break;
             }
         }
 
-        if (!graph.getDownstreamNeighbors(a).isEmpty()) {
+        if (!graph.getUpstreamNeighbors(a).isEmpty()) {
             while (true) {
                 count++;
                 Vertex prevVertex = visits.get(currentVertex2);
@@ -92,6 +93,7 @@ public class Algorithms {
      * @param graph
      * @return
      */
+    //TODO fix direction of this
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
@@ -129,6 +131,7 @@ public class Algorithms {
         return outputSet;
     }
 
+    //TODO implement this
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
@@ -182,6 +185,7 @@ public class Algorithms {
      * @param b
      * @return
      */
+    //COMMON FOLLOWERS
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> upstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aUNeighbors = graph.getUpstreamNeighbors(a);
@@ -210,6 +214,7 @@ public class Algorithms {
      * @param b
      * @return
      */
+    //COMMON CELEBS FOLLOWED
     public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> downstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aDNeighbors = graph.getDownstreamNeighbors(a);
