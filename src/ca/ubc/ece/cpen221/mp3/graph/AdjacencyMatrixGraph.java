@@ -31,11 +31,6 @@ public class AdjacencyMatrixGraph implements Graph {
         }
     }
 
-    /**
-     * Adds a vertex to the graph.
-     *
-     * Precondition: v is not already a vertex in the graph
-     */
     public void addVertex(Vertex v) {
         // if graph is full make the graph bigger then add the vertex
         // size of labels should never be bigger than matrix size because we
@@ -65,11 +60,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     }
 
-    /**
-     * Adds an edge from v1 to v2.
-     *
-     * Precondition: v1 and v2 are vertices in the graph
-     */
     public void addEdge(Vertex v1, Vertex v2) {
         // REP INVARIANT
         // EDGE FROM v1 to v2 means "v1 follows v2"
@@ -82,12 +72,6 @@ public class AdjacencyMatrixGraph implements Graph {
         matrixRows.get(indexV1).set(indexV2, true);
     }
 
-    /**
-     * Check if there is an edge from v1 to v2.
-     *
-     * Precondition: v1 and v2 are vertices in the graph Postcondition: return
-     * true iff an edge from v1 connects to v2
-     */
     public boolean edgeExists(Vertex v1, Vertex v2) {
         // find index v1 and v2 in labels
         int indexV1 = vertices.indexOf(v1);
@@ -96,16 +80,6 @@ public class AdjacencyMatrixGraph implements Graph {
         return matrixRows.get(indexV1).get(indexV2);
     }
 
-    /**
-     * Get an array containing all downstream vertices adjacent to v.
-     *
-     * Precondition: v is a vertex in the graph
-     * 
-     * Postcondition: returns a list containing each vertex w such that there is
-     * an edge from v to w. The size of the list must be as small as possible
-     * (No trailing null elements). This method should return a list of size 0
-     * iff v has no downstream neighbors.
-     */
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         // looking through row v
         // make an empty list to return
@@ -124,16 +98,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
     }
 
-    /**
-     * Get an array containing all upstream vertices adjacent to v.
-     *
-     * Precondition: v is a vertex in the graph
-     * 
-     * Postcondition: returns a list containing each vertex u such that there is
-     * an edge from u to v. The size of the list must be as small as possible
-     * (No trailing null elements). This method should return a list of size 0
-     * iff v has no upstream neighbors.
-     */
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         // looking through column v
         // make an empty list to return
@@ -145,19 +109,13 @@ public class AdjacencyMatrixGraph implements Graph {
 
             if (matrixRows.get(i).get(indexV)) {
                 // defensive copying here, not sure if necessary
-                upstreamNeighbours.add(new Vertex(vertices.get(i).getLabel()));
+                upstreamNeighbours.add(vertices.get(i));
             }
         }
         return upstreamNeighbours;
 
     }
 
-    /**
-     * Get all vertices in the graph.
-     *
-     * Postcondition: returns a list containing all vertices in the graph. This
-     * method should return a list of size 0 iff the graph has no vertices.
-     */
     public List<Vertex> getVertices() {
         // using defensive copying
         List<Vertex> allVertices = new ArrayList<Vertex>();
