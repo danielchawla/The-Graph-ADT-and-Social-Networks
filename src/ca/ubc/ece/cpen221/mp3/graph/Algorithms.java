@@ -128,18 +128,19 @@ public class Algorithms {
 
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> upstreamVertices = new LinkedList<Vertex>();
-        List<Vertex> aDNeighbors = graph.getUpstreamNeighbors(a);
-        List<Vertex> bDNeighbors = graph.getUpstreamNeighbors(b);
-        if (aDNeighbors.size() < bDNeighbors.size()) {
-            for (int i = 0; i < aDNeighbors.size(); i++) {
-                if (bDNeighbors.contains(aDNeighbors.get(i))) {
-                    upstreamVertices.add(new Vertex(aDNeighbors.get(i).getLabel()));
+        List<Vertex> aUNeighbors = graph.getUpstreamNeighbors(a);
+        List<Vertex> bUNeighbors = graph.getUpstreamNeighbors(b);
+        
+        if (aUNeighbors.size() < bUNeighbors.size()) {
+            for (int i = 0; i < aUNeighbors.size(); i++) {
+                if (bUNeighbors.contains(aUNeighbors.get(i))) {
+                    upstreamVertices.add(new Vertex(aUNeighbors.get(i).getLabel()));
                 }
             }
         } else {
-            for (int i = 0; i < bDNeighbors.size(); i++) {
-                if (aDNeighbors.contains(bDNeighbors.get(i))) {
-                    upstreamVertices.add(new Vertex(bDNeighbors.get(i).getLabel()));
+            for (int i = 0; i < bUNeighbors.size(); i++) {
+                if (aUNeighbors.contains(bUNeighbors.get(i))) {
+                    upstreamVertices.add(new Vertex(bUNeighbors.get(i).getLabel()));
                 }
             }
         }
