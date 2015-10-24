@@ -13,51 +13,52 @@ public class AdjacencyMatrixGraph implements Graph {
     List<Vertex> vertices;
     private static final int invalidIndex = -1;
 
-    AdjacencyMatrixGraph() {
+    public AdjacencyMatrixGraph() {
         matrixRows = new LinkedList<LinkedList<Boolean>>();
-        vertices = new LinkedList<Vertex>();
+        vertices = new LinkedList<Vertex>();  
     }
 
     public void addVertex(Vertex v) {
-
-            for (int i = 0; i < vertices.size(); i++) {
-                    matrixRows.get(i).add(false);
+        vertices.add(v);
+            for (List<Boolean> row : matrixRows) {
+                    row.add(false);
                 }
   
             LinkedList<Boolean> newRow = new LinkedList<Boolean>();
-            for (int i = 0; i <= vertices.size(); i++) {
+            for (int i = 0; i < vertices.size(); i++) {
                 newRow.add(false);
             }
 
             matrixRows.add(newRow);
 
-        vertices.add(v);
-
     }
-
-    public void addEdge(Vertex v1, Vertex v2) {
+/**
+ * precondition: row col exist
+ */
+    public void addEdge(Vertex row, Vertex col) {
         // REP INVARIANT
         // EDGE FROM v1 to v2 means "v1 follows v2"
         // matrix ROW v1 COLUMN v2 = true
 
+        
         // find index v1 and v2 in labels
-        int indexV1 = vertices.indexOf(v1);
-        int indexV2 = vertices.indexOf(v2);
+        int indexRow = vertices.indexOf(row);
+        int indexCol = vertices.indexOf(col);
 
-        matrixRows.get(indexV1).set(indexV2, true);
+        matrixRows.get(indexRow).set(indexCol, true);
     }
 
-    public boolean edgeExists(Vertex v1, Vertex v2) {
+    public boolean edgeExists(Vertex row, Vertex col) {
         // find index v1 and v2 in labels
 
-        int indexV1 = vertices.indexOf(v1);
-        int indexV2 = vertices.indexOf(v2);
+        int indexRow = vertices.indexOf(row);
+        int indexCol = vertices.indexOf(col);
 
-        if (! (indexV1 == invalidIndex && indexV2 == invalidIndex)){
+        if (indexRow == invalidIndex || indexCol == invalidIndex){
             return false;
         }
         
-        return matrixRows.get(indexV1).get(indexV2);
+        return matrixRows.get(indexRow).get(indexCol);
     }
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
