@@ -40,7 +40,7 @@ public class FileReader {
                 if(!added.contains(follower)){
                     twitterAdjacencyGraph.addVertex(follower);
                 }
-                if(added.contains(following)){
+                if(!added.contains(following)){
                     twitterAdjacencyGraph.addVertex(following);
                 }
             
@@ -79,7 +79,7 @@ public class FileReader {
                 if(!added.contains(follower)){
                     twitterMatrixGraph.addVertex(follower);
                 }
-                if(added.contains(following)){
+                if(!added.contains(following)){
                     twitterMatrixGraph.addVertex(following);
                 }
                 if(! twitterMatrixGraph.edgeExists(follower, following)){

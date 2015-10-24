@@ -20,16 +20,18 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public void addVertex(Vertex v) {
         vertices.add(v);
+        Boolean f = false;
             for (List<Boolean> row : matrixRows) {
-                    row.add(false);
+                    row.add(f);
                 }
   
             LinkedList<Boolean> newRow = new LinkedList<Boolean>();
             for (int i = 0; i < vertices.size(); i++) {
-                newRow.add(false);
+                newRow.add(f);
             }
-
+            int size = newRow.size();
             matrixRows.add(newRow);
+            int size2 = matrixRows.size();
 
     }
 /**
