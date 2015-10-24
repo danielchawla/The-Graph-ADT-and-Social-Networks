@@ -1,6 +1,5 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ public class AdjacencyMatrixGraph implements Graph {
     // Matrix is essentially an ArrayList of ArrayLists
     List<LinkedList<Boolean>> matrixRows;
     List<Vertex> vertices;
+    private static final int invalidIndex = -1;
 
     AdjacencyMatrixGraph() {
         matrixRows = new LinkedList<LinkedList<Boolean>>();
@@ -38,7 +38,7 @@ public class AdjacencyMatrixGraph implements Graph {
     public void addEdge(Vertex v1, Vertex v2) {
         // REP INVARIANT
         // EDGE FROM v1 to v2 means "v1 follows v2"
-        // matrix ROW v1 COLUMN v2 = 1
+        // matrix ROW v1 COLUMN v2 = true
 
         // find index v1 and v2 in labels
         int indexV1 = vertices.indexOf(v1);
@@ -49,9 +49,14 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         // find index v1 and v2 in labels
+
         int indexV1 = vertices.indexOf(v1);
         int indexV2 = vertices.indexOf(v2);
 
+        if (! (indexV1 == invalidIndex && indexV2 == invalidIndex)){
+            return false;
+        }
+        
         return matrixRows.get(indexV1).get(indexV2);
     }
 
@@ -65,8 +70,7 @@ public class AdjacencyMatrixGraph implements Graph {
         for (int i = 0; i < vertices.size(); i++) {
 
             if (matrixRows.get(indexV).get(i)) {
-                // defensive copying here, not sure if necessary
-                downstreamNeighbours.add(new Vertex(vertices.get(i).getLabel()));
+                downstreamNeighbours.add(vertices.get(i));
             }
         }
         return downstreamNeighbours;
@@ -83,7 +87,6 @@ public class AdjacencyMatrixGraph implements Graph {
         for (int i = 0; i < vertices.size(); i++) {
 
             if (matrixRows.get(i).get(indexV)) {
-                // defensive copying here, not sure if necessary
                 upstreamNeighbours.add(vertices.get(i));
             }
         }
@@ -92,16 +95,6 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     public List<Vertex> getVertices() {
-        // using defensive copying
-        List<Vertex> allVertices = new ArrayList<Vertex>();
-        for (int i = 0; i < vertices.size(); i++) {
-            allVertices.add(new Vertex(vertices.get(i).getLabel()));
-        }
-
-        return allVertices;
-
-        // otherwise without defensive copying
-        // return vertices;
-
+        return vertices;
     }
 }
