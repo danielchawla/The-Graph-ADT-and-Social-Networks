@@ -18,7 +18,7 @@ public class AdjacencyMatrixGraph implements Graph {
     // Constructor for the class
     // Initializes a matrix of size 10000x10000
     // keeps track of how many things you have in it
-    AdjacencyMatrixGraph() {
+    public AdjacencyMatrixGraph() {
         matrixSize = 10000;
         matrixRows = new ArrayList<ArrayList<Boolean>>();
         vertices = new ArrayList<Vertex>();
@@ -74,9 +74,13 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         // find index v1 and v2 in labels
+        
         int indexV1 = vertices.indexOf(v1);
         int indexV2 = vertices.indexOf(v2);
-
+        
+        if (! (indexV1 >= 0 && indexV2 >= 0)){
+            return false;
+        }
         return matrixRows.get(indexV1).get(indexV2);
     }
 
