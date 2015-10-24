@@ -10,51 +10,26 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 public class AdjacencyMatrixGraph implements Graph {
 
     // Matrix is essentially an ArrayList of ArrayLists
-    List<ArrayList<Boolean>> matrixRows;
+    List<LinkedList<Boolean>> matrixRows;
     List<Vertex> vertices;
-    int matrixSize;
-    private final int EXPAND_MATRIX = 100;
 
-    // Constructor for the class
-    // Initializes a matrix of size 10000x10000
-    // keeps track of how many things you have in it
     AdjacencyMatrixGraph() {
-        matrixSize = 10000;
-        matrixRows = new ArrayList<ArrayList<Boolean>>();
-        vertices = new ArrayList<Vertex>();
-        for (int i = 0; i < matrixSize; i++) {
-            ArrayList<Boolean> row = new ArrayList<Boolean>();
-            for (int k = 0; k < matrixSize; k++) {
-                row.add(false);
-            }
-            matrixRows.add(row);
-        }
+        matrixRows = new LinkedList<LinkedList<Boolean>>();
+        vertices = new LinkedList<Vertex>();
     }
 
     public void addVertex(Vertex v) {
-        // if graph is full make the graph bigger then add the vertex
-        // size of labels should never be bigger than matrix size because we
-        // check every time
-        if (vertices.size() == matrixSize) {
-            // increase the size of all existing rows
-            for (int i = 0; i < matrixSize; i++) {
-                for (int k = 0; k < EXPAND_MATRIX; k++) {
+
+            for (int i = 0; i < vertices.size(); i++) {
                     matrixRows.get(i).add(false);
                 }
-            }
-            // make a new empty list
-            ArrayList<Boolean> emptyRow = new ArrayList<Boolean>();
-            for (int i = 0; i < (EXPAND_MATRIX + matrixSize); i++) {
-                emptyRow.add(false);
-            }
-
-            // add empty rows to matrix
-            for (int i = 0; i < EXPAND_MATRIX; i++) {
-                matrixRows.add(emptyRow);
+  
+            LinkedList<Boolean> newRow = new LinkedList<Boolean>();
+            for (int i = 0; i <= vertices.size(); i++) {
+                newRow.add(false);
             }
 
-            matrixSize += EXPAND_MATRIX;
-        }
+            matrixRows.add(newRow);
 
         vertices.add(v);
 

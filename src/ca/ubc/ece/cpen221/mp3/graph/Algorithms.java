@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -31,9 +32,13 @@ public class Algorithms {
      * @return
      */
 
-    // using the bones of the BFS but not the actual method call
-    // because it would be stupid return BFS for all the data instead of just on
-    // the specific vertex
+    /**
+     * 
+     * @param graph
+     * @param a
+     * @param b
+     * @return
+     */
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         LinkedList<Vertex> queue = new LinkedList<Vertex>();
@@ -54,7 +59,7 @@ public class Algorithms {
         visitTable.replace(a, true);
         queue.add(currentVertex);
 
-        while (queue.size() !=0) {
+        while (queue.size() != 0) {
             currentVertex = queue.remove(0);
             for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
                 if (!visitTable.get(indexV)) {
@@ -82,6 +87,11 @@ public class Algorithms {
     // in the wrong direction as not connected
     // so if you start with a vertex at the terminus of a branch you will only
     // visit that vertex
+    /**
+     * 
+     * @param graph
+     * @return
+     */
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
         List<Vertex> vertices = graph.getVertices();
@@ -120,17 +130,63 @@ public class Algorithms {
     }
 
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
-        // TODO: Implement this method and others
-        Set<List<Vertex>> dummyReturn = new HashSet<List<Vertex>>();
-        return dummyReturn;
+        Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
+        List<Vertex> vertices = graph.getVertices();
+        // System.out.println(graph.getVertices().toString());
+        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
+
+//        for (Vertex v : vertices) {
+//            visitTable.put(v, false);
+//        }
+//
+//        for (Vertex v : vertices) {
+//            List<Vertex> outputList = new LinkedList<Vertex>();
+//            Stack<Vertex> stack = new Stack<Vertex>();
+//            Vertex currentVertex = v;
+//
+//            outputList.add(currentVertex);
+//            stack.push(currentVertex);
+//
+//            while(!stack.isEmpty()){
+//                currentVertex = stack.pop();
+//                System.out.println("currentV: "+ currentVertex);
+// 
+//                    if (!visitTable.get(currentVertex)) {
+//                        outputList.add(currentVertex);
+//                        System.out.println("added out: "+ currentVertex);
+//                        visitTable.replace(currentVertex, true);
+//                        System.out.println("Visited "+currentVertex);
+//                        
+//                        for(Vertex indexV : graph.getDownstreamNeighbors(currentVertex)){
+//                            if (!visitTable.get(indexV)){
+//                                stack.push(indexV);
+//                                System.out.println("added stack: "+ indexV);
+//                                //visitTable.replace(indexV, true);
+//                                //System.out.println("Visited "+indexV);
+//                            }
+//                        }
+//                    }
+//            }
+//            System.out.println(outputList.toString());
+//            outputSet.add(outputList);
+//        }
+
+        return outputSet;
 
     }
 
+    /**
+     * 
+     * @param graph
+     * @param a
+     * @param b
+     * @return
+     */
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> upstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aUNeighbors = graph.getUpstreamNeighbors(a);
         List<Vertex> bUNeighbors = graph.getUpstreamNeighbors(b);
-        
+
         if (aUNeighbors.size() < bUNeighbors.size()) {
             for (int i = 0; i < aUNeighbors.size(); i++) {
                 if (bUNeighbors.contains(aUNeighbors.get(i))) {
@@ -147,6 +203,13 @@ public class Algorithms {
         return upstreamVertices;
     }
 
+    /**
+     * 
+     * @param graph
+     * @param a
+     * @param b
+     * @return
+     */
     public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> downstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aDNeighbors = graph.getDownstreamNeighbors(a);

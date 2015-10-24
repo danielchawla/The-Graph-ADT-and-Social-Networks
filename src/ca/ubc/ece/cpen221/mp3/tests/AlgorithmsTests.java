@@ -129,5 +129,47 @@ public class AlgorithmsTests {
         assertEquals(0,Algorithms.shortestDistance(testGraph, f, h));
 
     }
+    
+    @Test
+    public void depthFirstSearchTest() {
+        testGraph.addVertex(a);
+        testGraph.addVertex(b);
+        testGraph.addVertex(s);
+        testGraph.addVertex(c);
+        testGraph.addVertex(d);
+        testGraph.addVertex(e);
+        testGraph.addVertex(f);
+        testGraph.addVertex(g);
+        testGraph.addVertex(h);
+        
+        testGraph.addEdge(a, b);
+        testGraph.addEdge(a, s);
+        
+        testGraph.addEdge(s, c);
+        testGraph.addEdge(s, g);
+        
+        testGraph.addEdge(c, d);
+        testGraph.addEdge(c, e);
+        testGraph.addEdge(c, f);
+        
+        testGraph.addEdge(g, f);
+        testGraph.addEdge(g, h);
+        
+        testGraph.addEdge(e, h);
+        Set<List<Vertex>> DFSout = Algorithms.depthFirstSearch(testGraph);
+        List<Vertex> aExpectedOut = new LinkedList<Vertex>();
+        aExpectedOut.add(a);
+        aExpectedOut.add(b);
+        aExpectedOut.add(s);
+        aExpectedOut.add(c);
+        aExpectedOut.add(d);
+        aExpectedOut.add(e);
+        aExpectedOut.add(h);
+        aExpectedOut.add(g);
+        aExpectedOut.add(f);
+
+        
+        assert(DFSout.contains(aExpectedOut));
+    }
 
 }
