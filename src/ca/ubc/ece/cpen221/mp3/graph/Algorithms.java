@@ -134,7 +134,12 @@ public class Algorithms {
 
         return outputSet;
     }
-
+    
+    /**
+     * 
+     * @param graph
+     * @return
+     */
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
 
@@ -203,7 +208,13 @@ public class Algorithms {
         }
         return downstreamVertices;
     }
-
+    
+    /**
+     * 
+     * @param graph
+     * @param v
+     * @return
+     */
     private static List<Vertex> dfsHelper(Graph graph, Vertex v) {
         List<Vertex> outputList = new LinkedList<Vertex>();
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
