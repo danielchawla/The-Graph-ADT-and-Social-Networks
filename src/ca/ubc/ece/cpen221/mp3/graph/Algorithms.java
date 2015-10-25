@@ -36,48 +36,53 @@ public class Algorithms {
      * 
      * @param graph
      * @param a
+     *            the vertex at which to start the path
      * @param b
-     * @return
+     *            the vertex to end at
+     * @return the minimum number of edges required to get from a to b. If no
+     *         path exists it will return -1. A path from a vertex to itself is
+     *         of 0.
      */
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         LinkedList<Vertex> queue = new LinkedList<Vertex>();
-        Map<Vertex, Vertex> visits = new HashMap<Vertex, Vertex>();
-        Vertex currentVertex = a;
-        Vertex currentVertex2 = b;
+        Map<Vertex, Vertex> visitedFrom = new HashMap<Vertex, Vertex>();
+        Vertex currentVSearch = a;
+        Vertex currentVCount = b;
         int count = 0;
-        // special case
-        if (a.equals(b))
-            return count;
 
         for (Vertex v : graph.getVertices()) {
             visitTable.put(v, false);
         }
 
         // initial cases
-        visits.put(a, a);
+        visitedFrom.put(a, a);
         visitTable.replace(a, true);
-        queue.add(currentVertex);
+        queue.add(currentVSearch);
 
         while (queue.size() != 0) {
-            currentVertex = queue.remove(0);
-            for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
+            currentVSearch = queue.remove(0);
+            for (Vertex indexV : graph.getUpstreamNeighbors(currentVSearch)) {
                 if (!visitTable.get(indexV)) {
                     visitTable.replace(indexV, true);
                     queue.add(indexV);
-                    visits.put(indexV, currentVertex);
+                    visitedFrom.put(indexV, currentVSearch);
                 }
-                if(indexV.equals(b)) break;
+                if (indexV.equals(b))
+                    break;
             }
         }
+
+        if (!visitedFrom.keySet().contains(b))
+            return -1;
 
         if (!graph.getUpstreamNeighbors(a).isEmpty()) {
             while (true) {
                 count++;
-                Vertex prevVertex = visits.get(currentVertex2);
+                Vertex prevVertex = visitedFrom.get(currentVCount);
                 if (prevVertex.equals(a))
                     break;
-                currentVertex2 = prevVertex;
+                currentVCount = prevVertex;
             }
         }
 
@@ -89,22 +94,21 @@ public class Algorithms {
     // so if you start with a vertex at the terminus of a branch you will only
     // visit that vertex
     /**
+     * requires: graph is valid
      * 
      * @param graph
-     * @return
+     * @return a set of lists of vertices. each list represents the traversal of
+     *         the graph beginning at that vertex
      */
-    //TODO fix direction of this
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
-        List<Vertex> vertices = graph.getVertices();
-        // System.out.println(graph.getVertices().toString());
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
 
-        for (Vertex v : vertices) {
+        for (Vertex v : graph.getVertices()) {
             visitTable.put(v, false);
         }
 
-        for (Vertex v : vertices) {
+        for (Vertex v : graph.getVertices()) {
             List<Vertex> outputList = new LinkedList<Vertex>();
             LinkedList<Vertex> queue = new LinkedList<Vertex>();
             Vertex currentVertex = v;
@@ -115,7 +119,7 @@ public class Algorithms {
 
             while (queue.size() != 0) {
                 currentVertex = queue.removeFirst();
-                for (Vertex indexV : graph.getDownstreamNeighbors(currentVertex)) {
+                for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
                     queue.add(indexV);
 
                     if (!visitTable.get(indexV)) {
@@ -131,51 +135,16 @@ public class Algorithms {
         return outputSet;
     }
 
-    //TODO implement this
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
-        List<Vertex> vertices = graph.getVertices();
-        // System.out.println(graph.getVertices().toString());
-        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
 
-//        for (Vertex v : vertices) {
-//            visitTable.put(v, false);
-//        }
-//
-//        for (Vertex v : vertices) {
-//            List<Vertex> outputList = new LinkedList<Vertex>();
-//            Stack<Vertex> stack = new Stack<Vertex>();
-//            Vertex currentVertex = v;
-//
-//            outputList.add(currentVertex);
-//            stack.push(currentVertex);
-//
-//            while(!stack.isEmpty()){
-//                currentVertex = stack.pop();
-//                System.out.println("currentV: "+ currentVertex);
-// 
-//                    if (!visitTable.get(currentVertex)) {
-//                        outputList.add(currentVertex);
-//                        System.out.println("added out: "+ currentVertex);
-//                        visitTable.replace(currentVertex, true);
-//                        System.out.println("Visited "+currentVertex);
-//                        
-//                        for(Vertex indexV : graph.getDownstreamNeighbors(currentVertex)){
-//                            if (!visitTable.get(indexV)){
-//                                stack.push(indexV);
-//                                System.out.println("added stack: "+ indexV);
-//                                //visitTable.replace(indexV, true);
-//                                //System.out.println("Visited "+indexV);
-//                            }
-//                        }
-//                    }
-//            }
-//            System.out.println(outputList.toString());
-//            outputSet.add(outputList);
-//        }
+        for (Vertex v : graph.getVertices()) {
+            List<Vertex> out = Algorithms.dfsHelper(graph, v);
+            System.out.println(out);
+            outputSet.add(out);
+        }
 
         return outputSet;
-
     }
 
     /**
@@ -185,7 +154,7 @@ public class Algorithms {
      * @param b
      * @return
      */
-    //COMMON FOLLOWERS
+    // COMMON FOLLOWERS
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> upstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aUNeighbors = graph.getUpstreamNeighbors(a);
@@ -214,7 +183,7 @@ public class Algorithms {
      * @param b
      * @return
      */
-    //COMMON CELEBS FOLLOWED
+    // COMMON CELEBS FOLLOWED
     public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> downstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aDNeighbors = graph.getDownstreamNeighbors(a);
@@ -233,6 +202,34 @@ public class Algorithms {
             }
         }
         return downstreamVertices;
+    }
+
+    private static List<Vertex> dfsHelper(Graph graph, Vertex v) {
+        List<Vertex> outputList = new LinkedList<Vertex>();
+        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
+        Stack<Vertex> stack = new Stack<Vertex>();
+        Vertex currentV = v;
+
+        outputList.add(currentV);
+        stack.push(currentV);
+        
+        for (Vertex vert : graph.getVertices()) {
+            visitTable.put(vert, false);
+        }
+        
+        while (!stack.isEmpty()) {
+            currentV = stack.pop();
+
+            for (Vertex vert : graph.getUpstreamNeighbors(currentV)) {
+                if (!visitTable.get(vert)) {
+                    visitTable.replace(vert, true);
+                    outputList.add(vert);
+                    stack.push(vert);
+                    Algorithms.dfsHelper(graph, vert);
+                }
+            }
+        }
+        return outputList;
     }
 
 }

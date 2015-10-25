@@ -30,7 +30,7 @@ public class twitterAlgorithms {
      * @return the minimum number of retweets needed for the reader to see the tweet
      *          assuming every user retweets the inital tweet
      */
-    public static int retweets (Graph graph, Vertex a, Vertex b){
+    public static int numRetweets (Graph graph, Vertex a, Vertex b){
         return Algorithms.shortestDistance(graph, a, b);
     }
 
