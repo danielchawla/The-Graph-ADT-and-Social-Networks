@@ -10,91 +10,112 @@ import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
+/**
+ * This class uses reads data from a file and create Adjacency List Graphs
+ * and Adjacency Matrix Graphs using that data.
+ *
+ * @author Annabelle Harvey and Daniel Chawla 
+ */
 public class FileReader {
     private static final int FOLLOWER = 0;
     private static final int FOLLOWING = 1;
+    private static FileInputStream INSTREAM;
     
-    private static FileInputStream twitterStream;
-    private static String inFile = "datasets/twitter.txt";
-
-    public static AdjacencyListGraph twitterAdjacencyList() throws Exception {
- 
-        AdjacencyListGraph twitterAdjacencyGraph = new AdjacencyListGraph();
-
-        try {
-            twitterStream = new FileInputStream(inFile);
+    private static final String INFILE = "datasets/twitter.txt"; // file where data is read from 
+    
+    /**
+     * Creates and returns Adjacency List Graph based off data from FileReader.INFILE.
+     * 
+     * @return Adjacency List Graph with data from FileReader.INFILE.
+     * @throws Exception if unable to read data from file successfully.
+     */
+    public static AdjacencyListGraph adjacencyList() throws Exception {
+        
+        AdjacencyListGraph adjacencyGraph = new AdjacencyListGraph();
+        
+        try { // tries reading data from the in file
+            INSTREAM = new FileInputStream(INFILE);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         try {
-            BufferedReader twitterReader = new BufferedReader(new InputStreamReader(twitterStream));
+            BufferedReader fileReader = new BufferedReader(new InputStreamReader(INSTREAM));
             String line;
             
             LinkedList<Vertex> added = new LinkedList<Vertex>();
             
-            while ((line = twitterReader.readLine()) != null){
-                String[] columns = line.split("->");
+            // main loop that fills adjacency graph as iterating through file line by line.
+            while ((line = fileReader.readLine()) != null){
+                String[] columns = line.split("->"); // splits data in each line between the "->" characters
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
                 
                 if(!added.contains(follower)){
-                    twitterAdjacencyGraph.addVertex(follower);
+                    adjacencyGraph.addVertex(follower);
                 }
-                if(added.contains(following)){
-                    twitterAdjacencyGraph.addVertex(following);
+                if(!added.contains(following)){
+                    adjacencyGraph.addVertex(following);
                 }
             
-                if(! twitterAdjacencyGraph.edgeExists(follower, following)){
-                    twitterAdjacencyGraph.addEdge(follower, following);
+                if(! adjacencyGraph.edgeExists(follower, following)){
+                    adjacencyGraph.addEdge(follower, following);
                 }                
             }
-            twitterReader.close();
-            twitterStream.close();
+            fileReader.close();
+            INSTREAM.close();
+            
         } catch (FileNotFoundException e) {
             throw new Exception(e);
         }
-        return twitterAdjacencyGraph;
+        return adjacencyGraph;
     }
     
-    public static AdjacencyMatrixGraph twitterAdjacencyMatrix() throws Exception {
+    /**
+     * Creates and returns Adjacency Matrix Graph based off data from FileReader.INFILE.
+     * 
+     * @return Adjacency Matrix Graph with data from FileReader.INFILE.
+     * @throws Exception if unable to read data from file successfully.
+     */
+    public static AdjacencyMatrixGraph adjacencyMatrix() throws Exception {
         
-        AdjacencyMatrixGraph twitterMatrixGraph = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph matrixGraph = new AdjacencyMatrixGraph();
 
-        try {
-            twitterStream = new FileInputStream(inFile);
+        try { // tries reading data from the in file
+            INSTREAM = new FileInputStream(INFILE);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         try {
-            BufferedReader twitterReader = new BufferedReader(new InputStreamReader(twitterStream));
+            BufferedReader fileReader = new BufferedReader(new InputStreamReader(INSTREAM));
             String line;            
             LinkedList<Vertex> added = new LinkedList<Vertex>();
             
             double count = 0.0;
-            while ((line = twitterReader.readLine()) != null){
-                String[] columns = line.split("->");
+            // main loop that fills adjacency graph as iterating through file line by line.
+            while ((line = fileReader.readLine()) != null){
+                String[] columns = line.split("->"); // splits data in each line between the "->" characters
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
                 
                 if(!added.contains(follower)){
-                    twitterMatrixGraph.addVertex(follower);
+                    matrixGraph.addVertex(follower);
                 }
-                if(added.contains(following)){
-                    twitterMatrixGraph.addVertex(following);
+                if(!added.contains(following)){
+                    matrixGraph.addVertex(following);
                 }
-                if(! twitterMatrixGraph.edgeExists(follower, following)){
-                    twitterMatrixGraph.addEdge(follower, following);
+                if(! matrixGraph.edgeExists(follower, following)){
+                    matrixGraph.addEdge(follower, following);
                 }  
                 
                 System.out.println( (int)(++count/1762504*100) + count);
             }
             
-            twitterReader.close();
-            twitterStream.close();
+            fileReader.close();
+            INSTREAM.close();
         
         } catch (FileNotFoundException e) {
             throw new Exception(e);
         }
-        return twitterMatrixGraph;
+        return matrixGraph;
     }
 }
