@@ -69,6 +69,8 @@ public class TwitterAnalysis {
                     System.out.println("Received data successfully. ");
                     System.out.println("Enter file name to print data to.");
                     String resultFile = console.nextLine().trim();
+                    
+                    // TODO: create out file
 
                     while ((line = fileReader.readLine()) != null) {
                         
