@@ -76,8 +76,8 @@ public class TwitterAnalysis {
                         
                         String[] columns = line.split(" "); // splits data in each line between the "->" characters
                         
-                        // checks to see if query has question at end of each line and each line has 4 strings seperated by spaces.
-                        if(! (columns[QUESTIONMARK].equals("?") && columns.length == STRINGSPERLINE) ){
+                        // checks to see if query has question mark at end of each line and each line has 4 strings seperated by spaces.
+                        if(! (columns[QUESTIONMARK].equals("?") || columns.length == STRINGSPERLINE) ){
                             continue;
                         }
                         
