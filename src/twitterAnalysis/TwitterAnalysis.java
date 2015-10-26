@@ -28,7 +28,7 @@ public class TwitterAnalysis {
     // CONSTANTS used when reading and writing queries
     private static final int QUERYTYPE = 0;
     private static final int USER1 = 1;
-    private static final int USER2 = 3;
+    private static final int USER2 = 2;
     private static final int QUESTIONMARK = 3;
     private static final int STRINGSPERLINE = 4;
     private static final String COMMONINFLUENCERS = "commonInfluencers";
@@ -51,7 +51,8 @@ public class TwitterAnalysis {
             System.out.println("Enter name of file containing queries or enter 'exit' to quit.");
             String inFile = console.nextLine().trim();
             
-            if (inFile == "exit"){ // exit if user inputs "exit"
+            if (inFile.equals("exit")){ // exit if user inputs "exit"
+                System.out.println("Program terminating...");
                 break;
             }
             
@@ -71,9 +72,10 @@ public class TwitterAnalysis {
                     System.out.println("Getting data from twitter database. This could take a couple minutes...");
                     AdjacencyListGraph listGraph = FileReader.adjacencyList(); // builds adjacency list with database
                     System.out.println("Received data successfully.");
+                    System.out.println("");
                     
                     System.out.println("Enter file name to print data to. Make sure to include a .txt at the"
-                            + "end of file name (e.g. filename.txt).");
+                            + " end of file name (e.g. filename.txt).");
                     System.out.println("Also, ensure there is no existing file with that name in current folder"
                             + " or it will be overwritten.");
                     String resultFile = console.nextLine().trim();
@@ -101,7 +103,7 @@ public class TwitterAnalysis {
                             commonInfluencers = Algorithms.commonDownstreamVertices(listGraph, user1, user2); 
                             
                             // Write results to out file.
-                            fileWriter.write("query: " + COMMONINFLUENCERS + " " + USER1 + " " + USER2);
+                            fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
                             fileWriter.write("<result>");
                             for (Vertex commonInfluencer : commonInfluencers) {
                                 fileWriter.write(TAB + commonInfluencer);
@@ -117,7 +119,7 @@ public class TwitterAnalysis {
                             int numRetweets = Algorithms.shortestDistance(listGraph, user1, user2); 
                             
                             // Write results to out file.
-                            fileWriter.write("query: " + COMMONINFLUENCERS + " " + USER1 + " " + USER2);
+                            fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
                             fileWriter.write("<result>");
                             fileWriter.write(numRetweets);
                             fileWriter.write("</result>");
@@ -125,6 +127,9 @@ public class TwitterAnalysis {
                         }
                         
                     }
+                    
+                    System.out.println("Output file created...");
+                    System.out.println("");
                     
                     fileWriter.close();
                     fileReader.close();
