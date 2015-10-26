@@ -19,35 +19,18 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AlgorithmsTests {
     
-    Vertex a = new Vertex("a");
-    Vertex b = new Vertex("b");
-    Vertex s = new Vertex("s");
-    Vertex c = new Vertex("c");
-    Vertex d = new Vertex("d");
-    Vertex e = new Vertex("e");
-    Vertex f = new Vertex("f");
-    Vertex g = new Vertex("g");
-    Vertex h = new Vertex("h");
+    private Vertex a = new Vertex("a");
+    private Vertex b = new Vertex("b");
+    private Vertex s = new Vertex("s");
+    private Vertex c = new Vertex("c");
+    private Vertex d = new Vertex("d");
+    private Vertex e = new Vertex("e");
+    private Vertex f = new Vertex("f");
+    private Vertex g = new Vertex("g");
+    private Vertex h = new Vertex("h");
     
     Graph testGraph = new AdjacencyListGraph();
-   
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
 
 //    @Test
 //    public void breadthFirstSearchTest() {
