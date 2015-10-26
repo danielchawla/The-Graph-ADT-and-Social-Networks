@@ -102,39 +102,15 @@ public class Algorithms {
      */
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
-        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
+
 
         for (Vertex v : graph.getVertices()) {
-            visitTable.put(v, false);
-        }
-
-        for (Vertex v : graph.getVertices()) {
-            List<Vertex> outputList = new LinkedList<Vertex>();
-            LinkedList<Vertex> queue = new LinkedList<Vertex>();
-            Vertex currentVertex = v;
-
-            outputList.add(currentVertex);
-            visitTable.replace(currentVertex, true);
-            queue.add(currentVertex);
-
-            while (queue.size() != 0) {
-                currentVertex = queue.removeFirst();
-                for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
-                    queue.add(indexV);
-
-                    if (!visitTable.get(indexV)) {
-                        outputList.add(indexV);
-                        visitTable.replace(indexV, true);
-                    }
-                }
-            }
-
-            outputSet.add(outputList);
+            outputSet.add(Algorithms.bfsHelper(graph, v));
         }
 
         return outputSet;
     }
-    
+
     /**
      * 
      * @param graph
@@ -145,7 +121,6 @@ public class Algorithms {
 
         for (Vertex v : graph.getVertices()) {
             List<Vertex> out = Algorithms.dfsHelper(graph, v);
-            System.out.println(out);
             outputSet.add(out);
         }
 
@@ -168,13 +143,13 @@ public class Algorithms {
         if (aUNeighbors.size() < bUNeighbors.size()) {
             for (int i = 0; i < aUNeighbors.size(); i++) {
                 if (bUNeighbors.contains(aUNeighbors.get(i))) {
-                    upstreamVertices.add(new Vertex(aUNeighbors.get(i).getLabel()));
+                    upstreamVertices.add(aUNeighbors.get(i));
                 }
             }
         } else {
             for (int i = 0; i < bUNeighbors.size(); i++) {
                 if (aUNeighbors.contains(bUNeighbors.get(i))) {
-                    upstreamVertices.add(new Vertex(bUNeighbors.get(i).getLabel()));
+                    upstreamVertices.add(bUNeighbors.get(i));
                 }
             }
         }
@@ -208,7 +183,7 @@ public class Algorithms {
         }
         return downstreamVertices;
     }
-    
+
     /**
      * 
      * @param graph
@@ -221,29 +196,55 @@ public class Algorithms {
         Stack<Vertex> stack = new Stack<Vertex>();
         Vertex currentV = v;
 
-        outputList.add(currentV);
+        for (Vertex vert : graph.getVertices()) {
+            visitTable.put(vert, false);
+        }
+
         stack.push(currentV);
-        System.out.println("start vert " + currentV);
+
+        while (!stack.isEmpty()) {
+            currentV = stack.pop();
+
+            if (!visitTable.get(currentV)) {
+                visitTable.replace(currentV, true);
+                outputList.add(currentV);
+
+                for (Vertex vert : graph.getUpstreamNeighbors(currentV)) {
+                    stack.push(vert);
+                    Algorithms.dfsHelper(graph, vert);
+
+                }
+            }
+        }
+        return outputList;
+    }
+
+    public static List<Vertex> bfsHelper(Graph graph, Vertex v){
+        Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
+        List<Vertex> outputList = new LinkedList<Vertex>();
+        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        Vertex currentVertex = v;
         
         for (Vertex vert : graph.getVertices()) {
             visitTable.put(vert, false);
         }
-        
-        while (!stack.isEmpty()) {
-            currentV = stack.pop();
 
-            for (Vertex vert : graph.getUpstreamNeighbors(currentV)) {
-                if (!visitTable.get(vert)) {
-                    visitTable.replace(vert, true);
-                    outputList.add(vert);
-                    System.out.println("vert " + vert);
-                    stack.push(vert);
-                    Algorithms.dfsHelper(graph, vert);
+        outputList.add(currentVertex);
+        visitTable.replace(currentVertex, true);
+        queue.add(currentVertex);
+
+        while (queue.size() != 0) {
+            currentVertex = queue.removeFirst();
+            for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
+                queue.add(indexV);
+
+                if (!visitTable.get(indexV)) {
+                    outputList.add(indexV);
+                    visitTable.replace(indexV, true);
                 }
             }
         }
-        System.out.println("OutputList " + outputList);
         return outputList;
+  
     }
-
 }

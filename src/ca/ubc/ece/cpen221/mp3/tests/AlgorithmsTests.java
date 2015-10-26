@@ -18,7 +18,6 @@ import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AlgorithmsTests {
-    
     private Vertex a = new Vertex("a");
     private Vertex b = new Vertex("b");
     private Vertex s = new Vertex("s");
@@ -29,91 +28,11 @@ public class AlgorithmsTests {
     private Vertex g = new Vertex("g");
     private Vertex h = new Vertex("h");
     
+    
     Graph testGraph = new AdjacencyListGraph();
-
-
-//    @Test
-//    public void breadthFirstSearchTest() {
-//        testGraph.addVertex(a);
-//        testGraph.addVertex(b);
-//        testGraph.addVertex(s);
-//        testGraph.addVertex(c);
-//        testGraph.addVertex(d);
-//        testGraph.addVertex(e);
-//        testGraph.addVertex(f);
-//        testGraph.addVertex(g);
-//        testGraph.addVertex(h);
-//        
-//        testGraph.addEdge(a, b);
-//        testGraph.addEdge(a, s);
-//        
-//        testGraph.addEdge(s, c);
-//        testGraph.addEdge(s, g);
-//        
-//        testGraph.addEdge(c, d);
-//        testGraph.addEdge(c, e);
-//        testGraph.addEdge(c, f);
-//        
-//        testGraph.addEdge(g, f);
-//        testGraph.addEdge(g, h);
-//        
-//        testGraph.addEdge(e, h);
-//        
-//        Set<List<Vertex>> BFSout = Algorithms.breadthFirstSearch(testGraph);
-//        List<Vertex> aExpectedOut = new LinkedList<Vertex>();
-////        aExpectedOut.add(a);
-////        aExpectedOut.add(b);
-////        aExpectedOut.add(s);
-////        aExpectedOut.add(c);
-////        aExpectedOut.add(g);
-////        aExpectedOut.add(d);
-////        aExpectedOut.add(e);
-////        aExpectedOut.add(f);
-////        aExpectedOut.add(h);
-////        these are wrong, need to switch direction
-//        assert(BFSout.contains(aExpectedOut));
-//        
-//    }
     
-    @Test
-    public void shortestDistanceTest() {
-        testGraph.addVertex(a);
-        testGraph.addVertex(b);
-        testGraph.addVertex(s);
-        testGraph.addVertex(c);
-        testGraph.addVertex(d);
-        testGraph.addVertex(e);
-        testGraph.addVertex(f);
-        testGraph.addVertex(g);
-        testGraph.addVertex(h);
-        
-        testGraph.addEdge(a, b);
-        testGraph.addEdge(a, s);
-        
-        testGraph.addEdge(s, c);
-        testGraph.addEdge(s, g);
-        
-        testGraph.addEdge(c, d);
-        testGraph.addEdge(c, e);
-        testGraph.addEdge(c, f);
-        
-        testGraph.addEdge(g, f);
-        testGraph.addEdge(g, h);
-        
-        testGraph.addEdge(e, h);        
-        
-        assertEquals(0,Algorithms.shortestDistance(testGraph, a, a));
-        assertEquals(-1,Algorithms.shortestDistance(testGraph, a, c));
-        assertEquals(1,Algorithms.shortestDistance(testGraph, b, a));
-        assertEquals(2,Algorithms.shortestDistance(testGraph, c, a));
-        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, b));
-        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, f));
-        assertEquals(3,Algorithms.shortestDistance(testGraph, h, a));
-
-    }
-    
-    @Test
-    public void depthFirstSearchTest() {
+    @Before
+    public void setup(){        
         testGraph.addVertex(a);
         testGraph.addVertex(b);
         testGraph.addVertex(s);
@@ -138,6 +57,68 @@ public class AlgorithmsTests {
         testGraph.addEdge(g, h);
         
         testGraph.addEdge(e, h);
+    }
+    
+
+
+    @Test
+    public void breadthFirstSearchTest() {
+        Set<List<Vertex>> BFSout = Algorithms.breadthFirstSearch(testGraph);
+        List<Vertex> aExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> bExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> cExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> dExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> sExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> gExpectedOut = new LinkedList<Vertex>();
+
+          aExpectedOut.add(a);
+          
+          bExpectedOut.add(b);
+          bExpectedOut.add(a);
+          
+          sExpectedOut.add(s);
+          sExpectedOut.add(a);
+          
+          cExpectedOut.add(c);
+          cExpectedOut.addAll(sExpectedOut);
+          
+          dExpectedOut.add(d);
+          dExpectedOut.addAll(cExpectedOut);
+          
+          gExpectedOut.add(g);
+          gExpectedOut.addAll(sExpectedOut);
+          
+//        aExpectedOut.add(b);
+//        aExpectedOut.add(s);
+//        aExpectedOut.add(c);
+//        aExpectedOut.add(g);
+//        aExpectedOut.add(d);
+//        aExpectedOut.add(e);
+//        aExpectedOut.add(f);
+//        aExpectedOut.add(h);
+//        these are wrong, need to switch direction
+        assert(Algorithms.bfsHelper(testGraph,a).equals(aExpectedOut));
+        assert(Algorithms.bfsHelper(testGraph,b).equals(bExpectedOut));
+        assert(Algorithms.bfsHelper(testGraph,s).equals(sExpectedOut));
+        assert(Algorithms.bfsHelper(testGraph,c).equals(cExpectedOut));
+        assert(Algorithms.bfsHelper(testGraph,d).equals(dExpectedOut));
+        assert(Algorithms.bfsHelper(testGraph,g).equals(gExpectedOut));
+    }
+    
+    @Test
+    public void shortestDistanceTest() {         
+        assertEquals(0,Algorithms.shortestDistance(testGraph, a, a));
+        assertEquals(-1,Algorithms.shortestDistance(testGraph, a, c));
+        assertEquals(1,Algorithms.shortestDistance(testGraph, b, a));
+        assertEquals(2,Algorithms.shortestDistance(testGraph, c, a));
+        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, b));
+        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, f));
+        assertEquals(3,Algorithms.shortestDistance(testGraph, h, a));
+
+    }
+    
+    @Test
+    public void depthFirstSearchTest() {
         Set<List<Vertex>> DFSout = Algorithms.depthFirstSearch(testGraph);
         List<Vertex> aExpectedOut = new LinkedList<Vertex>();
         List<Vertex> bExpectedOut = new LinkedList<Vertex>();
@@ -189,20 +170,36 @@ public class AlgorithmsTests {
         hExpectedOut2.add(e);
         hExpectedOut2.add(c);
 
-        for(List<Vertex> list : DFSout){
-            assert( list.equals(aExpectedOut) || 
-                    list.equals(bExpectedOut) ||
-                    list.equals(cExpectedOut) ||
-                    list.equals(dExpectedOut) ||
-                    list.equals(eExpectedOut) ||
-                    list.equals(gExpectedOut) ||
-                    list.equals(sExpectedOut) ||
-                    list.equals(fExpectedOut1) ||
-                    list.equals(fExpectedOut2) ||
-                    list.equals(hExpectedOut1) ||
-                    list.equals(hExpectedOut2));
-        }
+            assert(Algorithms.dfsHelper(testGraph,a).equals(aExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,b).equals(bExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,c).equals(cExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,d).equals(dExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,e).equals(eExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,g).equals(gExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,s).equals(sExpectedOut));
+            assert(Algorithms.dfsHelper(testGraph,f).equals(fExpectedOut1) ||
+                    Algorithms.dfsHelper(testGraph,f).equals(fExpectedOut2));
+            assert(Algorithms.dfsHelper(testGraph,h).equals(hExpectedOut1) || 
+                    Algorithms.dfsHelper(testGraph,h).equals(hExpectedOut2));
+            
+            for(List<Vertex> list : DFSout){
+                assert(list.equals(Algorithms.dfsHelper(testGraph,list.get(0))));
+            }
 
+    }
+    
+    @Test
+    public void commonUpstreamNeighborsTest(){
+        assert(Algorithms.commonUpstreamVertices(testGraph,d,e).contains(c)); 
+        assert(Algorithms.commonUpstreamVertices(testGraph,b,s).contains(a));
+        assert(Algorithms.commonUpstreamVertices(testGraph,c,g).contains(s));
+        assert(Algorithms.commonUpstreamVertices(testGraph,f,e).contains(c));
+    }
+    
+    @Test
+    public void commonDownstreamNeighborsTest(){
+        assert(Algorithms.commonDownstreamVertices(testGraph,a,g).isEmpty());
+        assert(Algorithms.commonDownstreamVertices(testGraph,c,g).contains(f));    
     }
 
 }
