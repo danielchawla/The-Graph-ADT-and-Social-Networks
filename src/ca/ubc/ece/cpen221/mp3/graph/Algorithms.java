@@ -108,8 +108,9 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid.
      * 
-     * @param graph
+     * @param graph The graph to search through.
      * @param a
      * @param b
      * @return
@@ -137,8 +138,9 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid.
      * 
-     * @param graph
+     * @param graph The graph to search through.
      * @param a
      * @param b
      * @return
@@ -165,8 +167,9 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid.
      * 
-     * @param graph
+     * @param graph The graph to search through.
      * @param v
      * @return
      */
@@ -199,6 +202,13 @@ public class Algorithms {
         return outputList;
     }
 
+    /**
+     * requires: Graph is valid.
+     * 
+     * @param graph The graph to search through.
+     * @param v
+     * @return
+     */
     public static List<Vertex> bfsHelper(Graph graph, Vertex v){
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         List<Vertex> outputList = new LinkedList<Vertex>();
