@@ -83,7 +83,7 @@ public class TwitterAnalysis {
                         resultFile = console.nextLine().trim();
                     }
                     
-                    
+                    List<String> processedQueries = new LinkedList<String>();
                     BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(
                             new FileOutputStream(resultFile), "utf-8")); // initializes writer for output file
 
@@ -105,9 +105,8 @@ public class TwitterAnalysis {
                         Vertex user1 = new Vertex(columns[USER1]);
                         Vertex user2 = new Vertex(columns[USER2]);
                         String query = columns[QUERYTYPE] + columns[USER1] + columns[USER2];
-                        List<String> processedQueries = new LinkedList<String>();
                         
-                        if( columns[QUERYTYPE].equals(COMMONINFLUENCERS) && !processedQueries.contains(query)){
+                        if( columns[QUERYTYPE].equals(COMMONINFLUENCERS) && (! processedQueries.contains(query))){
                             processedQueries.add(query); 
                             List<Vertex> commonInfluencers = new LinkedList<Vertex>();
                             
@@ -130,7 +129,8 @@ public class TwitterAnalysis {
                             fileWriter.newLine();
                             fileWriter.newLine();
                             
-                        } else if( columns[QUERYTYPE].equals(NUMRETWEETS) && !processedQueries.contains(query)){ 
+                        } else if( columns[QUERYTYPE].equals(NUMRETWEETS) && (!processedQueries.contains(query))){ 
+                            processedQueries.add(query); 
                             
                             // calls algorithm to find min number of retweets before user1's tweet shows up
                             // in user2's feed.
