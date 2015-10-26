@@ -81,7 +81,7 @@ public class TwitterAnalysis {
                     String resultFile = console.nextLine().trim();
                     
                     
-                    Writer fileWriter = new BufferedWriter(new OutputStreamWriter(
+                    BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(
                             new FileOutputStream(resultFile), "utf-8")); // initializes writer for output file
 
                     while ((line = fileReader.readLine()) != null) { //goes through inputed query file line by line                        
@@ -104,12 +104,16 @@ public class TwitterAnalysis {
                             
                             // Write results to out file.
                             fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
+                            fileWriter.newLine();
                             fileWriter.write("<result>");
+                            fileWriter.newLine();
                             for (Vertex commonInfluencer : commonInfluencers) {
                                 fileWriter.write(TAB + commonInfluencer);
+                                fileWriter.newLine();
                             }
                             fileWriter.write("</result>");
-                            fileWriter.write("");
+                            fileWriter.newLine();
+                            fileWriter.newLine();
                             
                         } else if( columns[QUERYTYPE].equals(NUMRETWEETS)){ 
                             
@@ -120,10 +124,14 @@ public class TwitterAnalysis {
                             
                             // Write results to out file.
                             fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
+                            fileWriter.newLine();
                             fileWriter.write("<result>");
+                            fileWriter.newLine();
                             fileWriter.write(numRetweets);
+                            fileWriter.newLine();
                             fileWriter.write("</result>");
-                            fileWriter.write("");
+                            fileWriter.newLine();
+                            fileWriter.newLine();
                         }
                         
                     }
