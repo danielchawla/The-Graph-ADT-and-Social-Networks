@@ -215,7 +215,7 @@ public class Algorithms {
      * @param v
      * @return
      */
-    private static List<Vertex> dfsHelper(Graph graph, Vertex v) {
+    public static List<Vertex> dfsHelper(Graph graph, Vertex v) {
         List<Vertex> outputList = new LinkedList<Vertex>();
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         Stack<Vertex> stack = new Stack<Vertex>();
@@ -223,6 +223,7 @@ public class Algorithms {
 
         outputList.add(currentV);
         stack.push(currentV);
+        System.out.println("start vert " + currentV);
         
         for (Vertex vert : graph.getVertices()) {
             visitTable.put(vert, false);
@@ -235,11 +236,13 @@ public class Algorithms {
                 if (!visitTable.get(vert)) {
                     visitTable.replace(vert, true);
                     outputList.add(vert);
+                    System.out.println("vert " + vert);
                     stack.push(vert);
                     Algorithms.dfsHelper(graph, vert);
                 }
             }
         }
+        System.out.println("OutputList " + outputList);
         return outputList;
     }
 
