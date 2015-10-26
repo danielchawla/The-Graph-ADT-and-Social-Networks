@@ -27,6 +27,7 @@ public class AlgorithmsTests {
     
     
     Graph testGraph = new AdjacencyListGraph();
+    Graph testGraph2 = new AdjacencyListGraph();
     
     @Before
     public void setup(){        
@@ -54,6 +55,29 @@ public class AlgorithmsTests {
         testGraph.addEdge(g, h);
         
         testGraph.addEdge(e, h);
+        
+        testGraph2.addVertex(a);
+        testGraph2.addVertex(b);
+        testGraph2.addVertex(c);
+        testGraph2.addVertex(d);
+        testGraph2.addVertex(e);
+        testGraph2.addVertex(f);
+        testGraph2.addVertex(g);
+        
+        testGraph2.addEdge(a, b);
+        testGraph2.addEdge(a, c);
+        testGraph2.addEdge(a, d);
+        
+        testGraph2.addEdge(b, c);
+        testGraph2.addEdge(b, d);
+        
+        testGraph2.addEdge(c, b);
+        testGraph2.addEdge(c, e);
+        testGraph2.addEdge(c, f);
+        
+        testGraph2.addEdge(e, f);
+        
+        testGraph2.addEdge(f, g);     
     }
     
 
@@ -196,7 +220,10 @@ public class AlgorithmsTests {
     @Test
     public void commonDownstreamNeighborsTest(){
         assert(Algorithms.commonDownstreamVertices(testGraph,a,g).isEmpty());
-        assert(Algorithms.commonDownstreamVertices(testGraph,c,g).contains(f));    
+        assert(Algorithms.commonDownstreamVertices(testGraph,c,g).contains(f));  
+        assert(Algorithms.commonDownstreamVertices(testGraph2, a,b).contains(c) &&
+                Algorithms.commonDownstreamVertices(testGraph2, a,b).contains(d));
+        
     }
 
 }
