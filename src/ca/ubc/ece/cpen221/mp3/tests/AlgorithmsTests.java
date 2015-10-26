@@ -84,7 +84,6 @@ public class AlgorithmsTests {
 
     @Test
     public void breadthFirstSearchTest() {
-        Set<List<Vertex>> BFSout = Algorithms.breadthFirstSearch(testGraph);
         List<Vertex> aExpectedOut = new LinkedList<Vertex>();
         List<Vertex> bExpectedOut = new LinkedList<Vertex>();
         List<Vertex> cExpectedOut = new LinkedList<Vertex>();

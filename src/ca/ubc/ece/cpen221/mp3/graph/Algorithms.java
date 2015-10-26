@@ -14,12 +14,11 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 public class Algorithms {
 
     /**
+     * requires: Graph is valid, and both vertices are in the graph.
      * 
-     * @param graph
-     * @param a
-     *            the vertex at which to start the path
-     * @param b
-     *            the vertex to end at
+     * @param graph The graph to search through.
+     * @param a The vertex at which to start the path (twitter case: the tweeter).
+     * @param b The vertex to end at (twitter case: the reader).
      * @return the minimum number of edges required to get from a to b. If no
      *         path exists it will return -1. A path from a vertex to itself is
      *         of 0.
@@ -70,16 +69,13 @@ public class Algorithms {
         return count;
     }
 
-    // the way this is written right now makes it so that it treats edges
-    // in the wrong direction as not connected
-    // so if you start with a vertex at the terminus of a branch you will only
-    // visit that vertex
     /**
-     * requires: graph is valid
+     * requires: Graph is valid.
      * 
-     * @param graph
-     * @return a set of lists of vertices. each list represents the traversal of
-     *         the graph beginning at that vertex
+     * @param graph The graph to traverse.
+     * @return A set of lists of vertices. Each list represents the traversal of
+     *         the graph beginning at that vertex ordered according to the 
+     *         breadth first search algorithm.
      */
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
@@ -93,9 +89,12 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid.
      * 
-     * @param graph
-     * @return
+     * @param graph The graph to traverse.
+     * @return A set of lists of vertices. Each list represents the traversal of
+     *         the graph beginning at that vertex ordered according to the 
+     *         depth first search algorithm.
      */
     public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();

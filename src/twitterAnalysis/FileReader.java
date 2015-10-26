@@ -52,9 +52,11 @@ public class FileReader {
                 
                 if(!added.contains(follower)){
                     adjacencyGraph.addVertex(follower);
+                    added.add(follower);
                 }
                 if(!added.contains(following)){
                     adjacencyGraph.addVertex(following);
+                    added.add(following);
                 }
             
                 if(! adjacencyGraph.edgeExists(follower, following)){
@@ -99,9 +101,11 @@ public class FileReader {
                 
                 if(!added.contains(follower)){
                     matrixGraph.addVertex(follower);
+                    added.add(follower);
                 }
                 if(!added.contains(following)){
                     matrixGraph.addVertex(following);
+                    added.add(following);
                 }
                 if(! matrixGraph.edgeExists(follower, following)){
                     matrixGraph.addEdge(follower, following);
