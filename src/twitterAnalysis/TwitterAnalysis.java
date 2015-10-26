@@ -78,7 +78,7 @@ public class TwitterAnalysis {
                     while (resultFile.length() < 1){ 
                         System.out.println("Enter file name to print data to. Make sure to include a .txt at the"
                                 + " end of file name (e.g. filename.txt).");
-                        System.out.println("Also, ensure there is no existing file with that name in current folder"
+                        System.out.println("WARNING: Ensure there is no existing file with that name in current folder"
                                 + " or it will be overwritten.");
                         resultFile = console.nextLine().trim();
                     }
