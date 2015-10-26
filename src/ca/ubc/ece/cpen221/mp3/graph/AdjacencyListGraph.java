@@ -7,11 +7,18 @@ import java.util.Map;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
+/**
+ * An adjacency list representation of a graph made up of vertices and edges.
+ * 
+ * @author Annabelle Harvey and Daniel Chawla
+ */
 public class AdjacencyListGraph implements Graph {
 
     private Map<Vertex, List<Vertex>> listGraph;
     
-    //make this a list of followers
+    /**
+     * Constructs new adjacency list graph.
+     */
     public AdjacencyListGraph(){
         listGraph = new HashMap<Vertex, List<Vertex>>();
     }
@@ -31,9 +38,6 @@ public class AdjacencyListGraph implements Graph {
      *
      * Precondition: v1 and v2 are vertices in the graph
      */
-    //edge from follower to celeb 
-    //follower is a FOLLOWER of celeb
-    //add follower to celeb's list of followers
     public void addEdge(Vertex follower, Vertex celeb) {
 
         listGraph.get(celeb).add(follower);
@@ -59,9 +63,7 @@ public class AdjacencyListGraph implements Graph {
      * (No trailing null elements). This method should return a list of size 0
      * iff v has no downstream neighbors.
      */
-    //DOWNSTREAM: all celeb's a user follows
     public List<Vertex> getDownstreamNeighbors(Vertex follower) {
-        // who does v follow
         List<Vertex> celebrities = new LinkedList<Vertex>();
         for (Vertex celeb : listGraph.keySet()) {
             if (listGraph.get(celeb).contains(follower))
@@ -81,8 +83,6 @@ public class AdjacencyListGraph implements Graph {
      * (No trailing null elements). This method should return a list of size 0
      * iff v has no upstream neighbors.
      */
-    //FOLLOWERS OF celeb
-    //GOING BACKWARDS THROUGH AN ARROW
     public List<Vertex> getUpstreamNeighbors(Vertex celeb) {
         return listGraph.get(celeb);
     }
@@ -97,6 +97,5 @@ public class AdjacencyListGraph implements Graph {
         List<Vertex> allVertices = new LinkedList<Vertex>();
         allVertices.addAll(listGraph.keySet());
         return allVertices;
-
     }
 }
