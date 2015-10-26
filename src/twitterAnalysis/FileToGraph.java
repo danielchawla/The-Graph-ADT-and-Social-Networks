@@ -11,12 +11,12 @@ import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 /**
- * This class uses reads data from a file and create Adjacency List Graphs
+ * This class contains methods uses reads data from a file and create Adjacency List Graphs
  * and Adjacency Matrix Graphs using that data.
  *
  * @author Annabelle Harvey and Daniel Chawla 
  */
-public class FileReader {
+public class FileToGraph {
     private static final int FOLLOWER = 0;
     private static final int FOLLOWING = 1;
     private static FileInputStream INSTREAM;

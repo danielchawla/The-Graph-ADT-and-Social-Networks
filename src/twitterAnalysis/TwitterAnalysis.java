@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +24,7 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
  */
 public class TwitterAnalysis {
     
+    private static final int INVALID = -2;
     // CONSTANTS used when reading and writing queries
     private static final int QUERYTYPE = 0;
     private static final int USER1 = 1;
@@ -46,6 +46,7 @@ public class TwitterAnalysis {
         Boolean exit = false;
         
         System.out.println("Welcome to Twitter Analysis. ");
+        
         
         // main twitter analysis loop. will continue until user inputs "exit" when prompted
         while (exit == false){ 
@@ -70,7 +71,8 @@ public class TwitterAnalysis {
                     String line;
                     
                     System.out.println("Getting data from twitter database. This could take a couple minutes...");
-                    AdjacencyListGraph listGraph = FileReader.adjacencyList(); // builds adjacency list with database
+                    AdjacencyListGraph listGraph = FileToGraph.adjacencyList(); // builds adjacency list with database
+
                     System.out.println("Received data successfully.");
                     System.out.println("");
                     
@@ -115,13 +117,12 @@ public class TwitterAnalysis {
                             List<Vertex> commonInfluencers = new LinkedList<Vertex>();
                             
                             // calls algorithm to find common influencers
-                            commonInfluencers = Algorithms.commonDownstreamVertices(listGraph, user1, user2); 
+                            commonInfluencers = findCommonInfluencers(listGraph, user1, user2); 
                             
                             // Write results to out file.
                             fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
                             fileWriter.newLine();
                             fileWriter.write("<result>");
-                            
                             fileWriter.newLine();
                             for (Vertex commonInfluencer : commonInfluencers) {
                                 if (commonInfluencer != null){
@@ -136,26 +137,27 @@ public class TwitterAnalysis {
                         } else if( columns[QUERYTYPE].equals(NUMRETWEETS) && (!processedQueries.contains(query))){ 
                             processedQueries.add(query); 
                             
-                            // calls algorithm to find min number of retweets before user1's tweet shows up
-                            // in user2's feed.
-                            //number of retweets is effectively number of vertices between two users
-                            //which is always 1 less than the number of edges
-                            int numRetweets = (Algorithms.shortestDistance(listGraph, user1, user2)-1); 
+                            int numRetweets = findNumRetweets(listGraph, user1, user2); 
                             
                             // Write results to out file.
                             fileWriter.write("query: " + NUMRETWEETS + " " + user1 + " " + user2);
                             fileWriter.newLine();
                             fileWriter.write("<result>");
                             fileWriter.newLine();
-                            if (numRetweets < 0) {fileWriter.write(TAB + "Tweet will never reach reader");}
-                            else{fileWriter.write(TAB + Integer.toString(numRetweets));}
+                            if (numRetweets == INVALID) {
+                                fileWriter.write(TAB + "Tweet will never reach user " + user2 + ".");
+                            } else if (numRetweets >= 0){
+                                fileWriter.write(TAB + Integer.toString(numRetweets));
+                            }
+                            else{
+                                fileWriter.write(TAB + user1 + " and " + user2 + " are the same user.");
+                            }
                             
                             fileWriter.newLine();
                             fileWriter.write("</result>");
                             fileWriter.newLine();
                             fileWriter.newLine();
                         } 
-                        
                     }
                     
                     System.out.println("Output file created...");
@@ -172,6 +174,34 @@ public class TwitterAnalysis {
             }
         }
         
+    }
+    /**
+     * Finds minimum number of retweets before user1's tweet shows up in user2's feed.
+     * @param Adjacency List Graph with users who follow other users. 
+     * @param user1 - person who sends tweet.
+     * @param user2 - person who may user1's tweet in their feed.
+     * @return min number of retweets before user1's tweet shows up in user2's feed.
+     *         -1 if user1 and user2 are at same vertex .
+     *         -2 if user1's tweet will never show up in user2's feed.       
+     */
+    private static int findNumRetweets(AdjacencyListGraph listGraph, Vertex user1, Vertex user2){
+        int distance = Algorithms.shortestDistance(listGraph, user1, user2);
+        int numRetweets = -2;
+        if (distance >= 0){
+            numRetweets = distance - 1;
+        }
+        return numRetweets;
+    }
+    
+    /**
+     * Finds and returns the users who both user1 and user2 follow. 
+     * @param Adjacency List Graph with users who follow other users. 
+     * @param user1 - person who sends tweet.
+     * @param user2 - person who may user1's tweet in their feed.
+     * @return List of users vertex's who both user1 and user2 follow
+     */
+    private static List<Vertex> findCommonInfluencers(AdjacencyListGraph listGraph, Vertex user1, Vertex user2){
+        return Algorithms.commonDownstreamVertices(listGraph, user1, user2);
     }
 }
     

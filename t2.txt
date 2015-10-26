@@ -16,12 +16,12 @@ query: commonInfluencers b c
 
 query: numRetweets a a
 <result>
-    a and a are the same user.
+    Tweet will never reach usera
 </result>
 
 query: numRetweets a b
 <result>
-    Tweet will never reach user b.
+    Tweet will never reach usera
 </result>
 
 query: numRetweets b a
@@ -41,6 +41,6 @@ query: numRetweets g a
 
 query: numRetweets a g
 <result>
-    Tweet will never reach user g.
+    Tweet will never reach usera
 </result>
 
