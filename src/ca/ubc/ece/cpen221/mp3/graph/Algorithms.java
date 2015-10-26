@@ -108,13 +108,13 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid.
      * 
-     * @param graph
-     * @param a
-     * @param b
-     * @return
+     * @param graph The graph to search through.
+     * @param a A vertex in the graph.
+     * @param b A vertex in the graph.
+     * @return A list of vertices v such that there is an edge from a to v and from b to v.
      */
-    // COMMON FOLLOWERS
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> upstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aUNeighbors = graph.getUpstreamNeighbors(a);
@@ -137,13 +137,13 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid, both a and be are in the graph.
      * 
-     * @param graph
-     * @param a
-     * @param b
-     * @return
+     * @param graph The graph to search through.
+     * @param a A vertex in the graph.
+     * @param b A vertex in the graph.
+     * @return A list of vertices v such that there is an edge from v to a and from v to b.
      */
-    // COMMON CELEBS FOLLOWED
     public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
         List<Vertex> downstreamVertices = new LinkedList<Vertex>();
         List<Vertex> aDNeighbors = graph.getDownstreamNeighbors(a);
@@ -165,10 +165,13 @@ public class Algorithms {
     }
 
     /**
+     * requires: Graph is valid, v is in the graph.
      * 
-     * @param graph
-     * @param v
-     * @return
+     * @param graph The graph to search through.
+     * @param v Vertex at which to start the algorithm.
+     * @return A list that represents the traversal of
+     *         the graph beginning at that vertex ordered according to the 
+     *         depth first search algorithm.
      */
     public static List<Vertex> dfsHelper(Graph graph, Vertex v) {
         List<Vertex> outputList = new LinkedList<Vertex>();
@@ -199,6 +202,15 @@ public class Algorithms {
         return outputList;
     }
 
+    /**
+     * requires: Graph is valid, v is in the graph.
+     * 
+     * @param graph The graph to search through.
+     * @param v Vertex at which to start the algorithm.
+     * @return A list that represents the traversal of
+     *         the graph beginning at that vertex ordered according to the 
+     *         breadth first search algorithm.
+     */
     public static List<Vertex> bfsHelper(Graph graph, Vertex v){
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         List<Vertex> outputList = new LinkedList<Vertex>();

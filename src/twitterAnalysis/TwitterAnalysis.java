@@ -138,14 +138,17 @@ public class TwitterAnalysis {
                             
                             // calls algorithm to find min number of retweets before user1's tweet shows up
                             // in user2's feed.
-                            int numRetweets = Algorithms.shortestDistance(listGraph, user1, user2); 
+                            //number of retweets is effectively number of vertices between two users
+                            //which is always 1 less than the number of edges
+                            int numRetweets = (Algorithms.shortestDistance(listGraph, user1, user2)-1); 
                             
                             // Write results to out file.
                             fileWriter.write("query: " + NUMRETWEETS + " " + user1 + " " + user2);
                             fileWriter.newLine();
                             fileWriter.write("<result>");
                             fileWriter.newLine();
-                            fileWriter.write(Integer.toString(numRetweets));
+                            if (numRetweets < 0) {fileWriter.write(TAB + "Tweet will never reach reader");}
+                            else{fileWriter.write(TAB + Integer.toString(numRetweets));}
                             
                             fileWriter.newLine();
                             fileWriter.write("</result>");

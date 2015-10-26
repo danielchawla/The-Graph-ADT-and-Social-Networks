@@ -113,15 +113,6 @@ public class AlgorithmsTests {
           gExpectedOut.add(g);
           gExpectedOut.addAll(sExpectedOut);
           
-//        aExpectedOut.add(b);
-//        aExpectedOut.add(s);
-//        aExpectedOut.add(c);
-//        aExpectedOut.add(g);
-//        aExpectedOut.add(d);
-//        aExpectedOut.add(e);
-//        aExpectedOut.add(f);
-//        aExpectedOut.add(h);
-//        these are wrong, need to switch direction
         assert(Algorithms.bfsHelper(testGraph,a).equals(aExpectedOut));
         assert(Algorithms.bfsHelper(testGraph,b).equals(bExpectedOut));
         assert(Algorithms.bfsHelper(testGraph,s).equals(sExpectedOut));
