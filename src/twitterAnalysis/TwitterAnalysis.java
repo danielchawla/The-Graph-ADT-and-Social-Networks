@@ -90,15 +90,19 @@ public class TwitterAnalysis {
                     while ((line = fileReader.readLine()) != null) { //goes through inputed query file line by line                        
                         String[] columns = line.split(" "); // splits each string separated by space character
                         
-                        // remove unnecessary white space
-                        columns[QUERYTYPE] = columns[QUERYTYPE].trim();
-                        columns[USER1] = columns[USER1].trim();
-                        columns[USER2] = columns[USER2].trim();
-                        columns[QUESTIONMARK] = columns[QUESTIONMARK].trim();
+                        // checks if query has appropriate number of strings per line in file
+                        // and remove unnecessary white space
+                        if (columns.length == STRINGSPERLINE){
+                            columns[QUERYTYPE] = columns[QUERYTYPE].trim();
+                            columns[USER1] = columns[USER1].trim();
+                            columns[USER2] = columns[USER2].trim();
+                            columns[QUESTIONMARK] = columns[QUESTIONMARK].trim();
+                        } else {
+                            continue;
+                        }
                         
                         // checks to see if query has question mark at end of each line 
-                        // and that each line has 4 strings separated by spaces.
-                        if(! (columns[QUESTIONMARK].equals("?") || columns.length == STRINGSPERLINE) ){
+                        if(! columns[QUESTIONMARK].equals("?")){
                             continue;
                         }
                         
