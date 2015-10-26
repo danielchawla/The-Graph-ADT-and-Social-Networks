@@ -1,0 +1,46 @@
+query: commonInfluencers a b
+<result>
+    c
+    d
+</result>
+
+query: commonInfluencers b a
+<result>
+    c
+    d
+</result>
+
+query: commonInfluencers b c
+<result>
+</result>
+
+query: numRetweets a a
+<result>
+0
+</result>
+
+query: numRetweets a b
+<result>
+-1
+</result>
+
+query: numRetweets b a
+<result>
+1
+</result>
+
+query: numRetweets g c
+<result>
+2
+</result>
+
+query: numRetweets g a
+<result>
+3
+</result>
+
+query: numRetweets a g
+<result>
+-1
+</result>
+

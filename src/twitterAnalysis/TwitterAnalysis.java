@@ -145,13 +145,13 @@ public class TwitterAnalysis {
                             fileWriter.newLine();
                             fileWriter.write("<result>");
                             fileWriter.newLine();
-                            fileWriter.write(numRetweets);
+                            fileWriter.write(Integer.toString(numRetweets));
                             
                             fileWriter.newLine();
                             fileWriter.write("</result>");
                             fileWriter.newLine();
                             fileWriter.newLine();
-                        }
+                        } 
                         
                     }
                     
