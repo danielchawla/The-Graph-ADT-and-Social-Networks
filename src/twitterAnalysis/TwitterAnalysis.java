@@ -40,6 +40,7 @@ public class TwitterAnalysis {
      * queries and returns files with query answers. 
      */
     public static void main (String[] Args){
+        
         FileInputStream queryStream;
         Scanner console = new Scanner(System.in);
         Boolean exit = false;
@@ -103,8 +104,11 @@ public class TwitterAnalysis {
                         
                         Vertex user1 = new Vertex(columns[USER1]);
                         Vertex user2 = new Vertex(columns[USER2]);
+                        String query = columns[QUERYTYPE] + columns[USER1] + columns[USER2];
+                        List<String> processedQueries = new LinkedList<String>();
                         
-                        if( columns[QUERYTYPE].equals(COMMONINFLUENCERS)){
+                        if( columns[QUERYTYPE].equals(COMMONINFLUENCERS) && !processedQueries.contains(query)){
+                            processedQueries.add(query); 
                             List<Vertex> commonInfluencers = new LinkedList<Vertex>();
                             
                             // calls algorithm to find common influencers
@@ -118,9 +122,6 @@ public class TwitterAnalysis {
                             fileWriter.newLine();
                             for (Vertex commonInfluencer : commonInfluencers) {
                                 if (commonInfluencer != null){
-                                    // TODO remove this:
-                                    System.out.println(commonInfluencer);
-                                    System.out.println("ha");
                                     fileWriter.write(TAB + commonInfluencer);
                                     fileWriter.newLine();
                                 }
@@ -129,7 +130,7 @@ public class TwitterAnalysis {
                             fileWriter.newLine();
                             fileWriter.newLine();
                             
-                        } else if( columns[QUERYTYPE].equals(NUMRETWEETS)){ 
+                        } else if( columns[QUERYTYPE].equals(NUMRETWEETS) && !processedQueries.contains(query)){ 
                             
                             // calls algorithm to find min number of retweets before user1's tweet shows up
                             // in user2's feed.
