@@ -61,7 +61,7 @@ public class TwitterAnalysis {
                     queryStream = new FileInputStream(inFile);
                 } catch (FileNotFoundException e) {
                     System.out.println("Error finding file. File may not exist in specified location.");
-                    break;
+                    continue;
                 }
                 
 
@@ -108,8 +108,10 @@ public class TwitterAnalysis {
                             fileWriter.write("<result>");
                             fileWriter.newLine();
                             for (Vertex commonInfluencer : commonInfluencers) {
-                                fileWriter.write(TAB + commonInfluencer);
-                                fileWriter.newLine();
+                                if (commonInfluencer != null){
+                                    fileWriter.write(TAB + commonInfluencer);
+                                    fileWriter.newLine();
+                                }
                             }
                             fileWriter.write("</result>");
                             fileWriter.newLine();
@@ -144,7 +146,8 @@ public class TwitterAnalysis {
                     queryStream.close();
                     
                 } catch (Exception e) {
-                    System.out.println ("Error reading from file.");
+                    
+                    e.printStackTrace();
                 }
             }
         }

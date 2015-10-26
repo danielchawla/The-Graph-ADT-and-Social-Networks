@@ -62,13 +62,13 @@ public class Algorithms {
 
         while (queue.size() != 0) {
             currentVSearch = queue.remove(0);
-            for (Vertex indexV : graph.getUpstreamNeighbors(currentVSearch)) {
-                if (!visitTable.get(indexV)) {
-                    visitTable.replace(indexV, true);
-                    queue.add(indexV);
-                    visitedFrom.put(indexV, currentVSearch);
+            for (Vertex vertexIndex : graph.getUpstreamNeighbors(currentVSearch)) {
+                if (!visitTable.get(vertexIndex)) {
+                    visitTable.replace(vertexIndex, true);
+                    queue.add(vertexIndex);
+                    visitedFrom.put(vertexIndex, currentVSearch);
                 }
-                if (indexV.equals(b))
+                if (vertexIndex.equals(b))
                     break;
             }
         }

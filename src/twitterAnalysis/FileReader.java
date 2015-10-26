@@ -21,7 +21,7 @@ public class FileReader {
     private static final int FOLLOWING = 1;
     private static FileInputStream INSTREAM;
     
-    private static final String INFILE = "datasets/twitter.txt"; // file where data is read from 
+    private static final String INFILE = "datasets/testdatabase.txt"; // file where data is read from 
     
     /**
      * Creates and returns Adjacency List Graph based off data from FileReader.INFILE.
@@ -90,7 +90,7 @@ public class FileReader {
             String line;            
             LinkedList<Vertex> added = new LinkedList<Vertex>();
             
-            double count = 0.0;
+
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
                 String[] columns = line.split("->"); // splits data in each line between the "->" characters
@@ -107,7 +107,6 @@ public class FileReader {
                     matrixGraph.addEdge(follower, following);
                 }  
                 
-                System.out.println( (int)(++count/1762504*100) + count);
             }
             
             fileReader.close();
