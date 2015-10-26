@@ -85,7 +85,6 @@ public class AdjacencyListTests {
         listGraph.addEdge(FRANK, MARY);
         listGraph.addEdge(FRANK, BOB);
         listGraph.addEdge(BOB, FRANK);
-        
 
         assertTrue(listGraph.getDownstreamNeighbors(FRANK).contains(MARY));
         assertTrue(listGraph.getDownstreamNeighbors(FRANK).contains(BOB));

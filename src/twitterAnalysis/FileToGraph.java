@@ -21,7 +21,7 @@ public class FileToGraph {
     private static final int FOLLOWING = 1;
     private static FileInputStream INSTREAM;
     
-    private static final String INFILE = "datasets/testdatabase.txt"; // file where data is read from 
+    private static final String INFILE = "datasets/twitter.txt"; // file where data is read from 
     
     /**
      * Creates and returns Adjacency List Graph based off data from FileReader.INFILE.

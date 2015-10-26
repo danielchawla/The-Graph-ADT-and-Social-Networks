@@ -72,7 +72,7 @@ public class Algorithms {
     /**
      * requires: Graph is valid.
      * 
-     * @param graph The graph to traverse.
+     * @param graph - The graph to traverse.
      * @return A set of lists of vertices. Each list represents the traversal of
      *         the graph beginning at that vertex ordered according to the 
      *         breadth first search algorithm.
@@ -177,24 +177,24 @@ public class Algorithms {
         List<Vertex> outputList = new LinkedList<Vertex>();
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         Stack<Vertex> stack = new Stack<Vertex>();
-        Vertex currentV = v;
+        Vertex currentVertex = v;
 
-        for (Vertex vert : graph.getVertices()) {
-            visitTable.put(vert, false);
+        for (Vertex vertex : graph.getVertices()) {
+            visitTable.put(vertex, false);
         }
 
-        stack.push(currentV);
+        stack.push(currentVertex);
 
         while (!stack.isEmpty()) {
-            currentV = stack.pop();
+            currentVertex = stack.pop();
 
-            if (!visitTable.get(currentV)) {
-                visitTable.replace(currentV, true);
-                outputList.add(currentV);
+            if (!visitTable.get(currentVertex)) {
+                visitTable.replace(currentVertex, true);
+                outputList.add(currentVertex);
 
-                for (Vertex vert : graph.getUpstreamNeighbors(currentV)) {
-                    stack.push(vert);
-                    Algorithms.dfsHelper(graph, vert);
+                for (Vertex vertex : graph.getUpstreamNeighbors(currentVertex)) {
+                    stack.push(vertex);
+                    Algorithms.dfsHelper(graph, vertex);
 
                 }
             }
@@ -237,6 +237,5 @@ public class Algorithms {
             }
         }
         return outputList;
-  
     }
 }
