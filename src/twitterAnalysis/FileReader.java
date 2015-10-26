@@ -26,6 +26,7 @@ public class FileReader {
     /**
      * Creates and returns Adjacency List Graph based off data from FileReader.INFILE.
      * 
+     * Precondition: follower and following must be separated an "->"
      * @return Adjacency List Graph with data from FileReader.INFILE.
      * @throws Exception if unable to read data from file successfully.
      */
@@ -46,7 +47,11 @@ public class FileReader {
             
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
-                String[] columns = line.split(" -> "); // splits data in each line between the "->" characters
+                String[] columns = line.split("->"); // splits data in each line between the "->" characters
+                      
+                // removes unnecessary white space
+                columns[FOLLOWER] = columns[FOLLOWER].trim();
+                columns[FOLLOWING] = columns[FOLLOWING].trim();
                 
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
@@ -96,7 +101,12 @@ public class FileReader {
 
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
-                String[] columns = line.split("->"); // splits data in each line between the "->" characters
+                String[] columns = line.split("->"); // splits data in each line between the " -> " characters
+                
+                // removes unnecessary white space
+                columns[FOLLOWER] = columns[FOLLOWER].trim();
+                columns[FOLLOWING] = columns[FOLLOWING].trim();
+                
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
                 

@@ -64,7 +64,6 @@ public class TwitterAnalysis {
                     continue;
                 }
                 
-
                 try {
                     BufferedReader fileReader = new BufferedReader(new InputStreamReader(queryStream));
                     String line;
@@ -88,7 +87,13 @@ public class TwitterAnalysis {
                             new FileOutputStream(resultFile), "utf-8")); // initializes writer for output file
 
                     while ((line = fileReader.readLine()) != null) { //goes through inputed query file line by line                        
-                        String[] columns = line.split(" "); // splits each string separated by space character 
+                        String[] columns = line.split(" "); // splits each string separated by space character
+                        
+                        // remove unnecessary white space
+                        columns[QUERYTYPE] = columns[QUERYTYPE].trim();
+                        columns[USER1] = columns[USER1].trim();
+                        columns[USER2] = columns[USER2].trim();
+                        columns[QUESTIONMARK] = columns[QUESTIONMARK].trim();
                         
                         // checks to see if query has question mark at end of each line 
                         // and that each line has 4 strings separated by spaces.
