@@ -6,13 +6,19 @@ import org.junit.Test;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
+
+/**
+ * JUnit test cases for AdjacencyMatrixGraph
+ * 
+ * @author Annabelle Harvey and Daniel Chawla
+ */
 public class AdjacencyMatrixTests {
-    private final Vertex bob = new Vertex("Bob");
-    private final Vertex mary = new Vertex("Mary");
-    private final Vertex frank = new Vertex("Frank");
+    private final static Vertex BOB = new Vertex("Bob");
+    private final static Vertex MARY = new Vertex("Mary");
+    private final static Vertex FRANK = new Vertex("Frank");
 
     /**
-     * Tests addVertext method and getVertices method of AdjencyListTests.
+     * Tests addVertext method and getVertices method of AdjacencyMatrixGraph.
      */
     @Test
     public void addVertextAndGetVerticesTests() {
@@ -20,72 +26,72 @@ public class AdjacencyMatrixTests {
         
         assertEquals(0, listGraph.getVertices().size());
 
-        listGraph.addVertex(bob);
-        listGraph.addVertex(frank);
+        listGraph.addVertex(BOB);
+        listGraph.addVertex(FRANK);
         listGraph.addVertex(null);
 
         assertFalse(listGraph.getVertices().isEmpty());
-        assertFalse(listGraph.getVertices().contains(mary));
-        assertTrue(listGraph.getVertices().contains(bob));
-        assertTrue(listGraph.getVertices().contains(frank));
+        assertFalse(listGraph.getVertices().contains(MARY));
+        assertTrue(listGraph.getVertices().contains(BOB));
+        assertTrue(listGraph.getVertices().contains(FRANK));
         assertEquals(3, listGraph.getVertices().size());
     }
     
     /**
-     * Tests addEdge method and edgeExists method of AdjencyListTests.
+     * Tests addEdge method and edgeExists method of AdjacencyMatrixGraph.
      */
     @Test
     public void addEdgeAndEdgeExistsTests() {
         AdjacencyMatrixGraph listGraph = new AdjacencyMatrixGraph();
 
-        listGraph.addVertex(bob);
-        listGraph.addVertex(mary);
-        listGraph.addVertex(frank);
-        listGraph.addEdge(bob, mary);
+        listGraph.addVertex(BOB);
+        listGraph.addVertex(MARY);
+        listGraph.addVertex(FRANK);
+        listGraph.addEdge(BOB, MARY);
 
-        assertTrue(listGraph.edgeExists(bob, mary));
-        assertFalse(listGraph.edgeExists(mary, bob));
-        assertFalse(listGraph.edgeExists(mary, bob));
+        assertTrue(listGraph.edgeExists(BOB, MARY));
+        assertFalse(listGraph.edgeExists(MARY, BOB));
+        assertFalse(listGraph.edgeExists(MARY, BOB));
     }
     
     /**
-     * Tests getUpstreamNeighbors method of AdjencyListTests.
+     * Tests getUpstreamNeighbors method of AdjacencyMatrixGraph.
      */
     @Test
     public void getUpstreamNeighborsTest() {
         AdjacencyMatrixGraph listGraph = new AdjacencyMatrixGraph();
 
-        listGraph.addVertex(bob);
-        listGraph.addVertex(mary);
-        listGraph.addVertex(frank);        
-        listGraph.addEdge(mary, bob);
-        listGraph.addEdge(frank, bob);
+        listGraph.addVertex(BOB);
+        listGraph.addVertex(MARY);
+        listGraph.addVertex(FRANK);        
+        listGraph.addEdge(MARY, BOB);
+        listGraph.addEdge(FRANK, BOB);
 
-        assertTrue(listGraph.getUpstreamNeighbors(bob).contains(mary));
-        assertTrue(listGraph.getUpstreamNeighbors(bob).contains(frank));
-        assertFalse(listGraph.getUpstreamNeighbors(bob).contains(bob));
-        assertFalse(listGraph.getUpstreamNeighbors(mary).contains(bob));
+        assertTrue(listGraph.getUpstreamNeighbors(BOB).contains(MARY));
+        assertTrue(listGraph.getUpstreamNeighbors(BOB).contains(FRANK));
+        assertFalse(listGraph.getUpstreamNeighbors(BOB).contains(BOB));
+        assertFalse(listGraph.getUpstreamNeighbors(MARY).contains(BOB));
     }
     
     /**
-     * Tests getDownstreamNeighbor method of AdjencyListTests.
+     * Tests getDownstreamNeighbor method of AdjacencyMatrixGraph.
      */
     @Test
     public void getDownstreamNeighborTest() {
+        
         AdjacencyMatrixGraph listGraph = new AdjacencyMatrixGraph();
 
-        listGraph.addVertex(bob);
-        listGraph.addVertex(mary);
-        listGraph.addVertex(frank);        
-        listGraph.addEdge(frank, mary);
-        listGraph.addEdge(frank, bob);
-        listGraph.addEdge(bob, frank);
-        
+        listGraph.addVertex(BOB);
+        listGraph.addVertex(MARY);
+        listGraph.addVertex(FRANK);        
+        listGraph.addEdge(FRANK, MARY);
+        listGraph.addEdge(FRANK, BOB);
+        listGraph.addEdge(BOB, FRANK);
 
-        assertTrue(listGraph.getDownstreamNeighbors(frank).contains(mary));
-        assertTrue(listGraph.getDownstreamNeighbors(frank).contains(bob));
-        assertTrue(listGraph.getDownstreamNeighbors(bob).contains(frank));
-        assertFalse(listGraph.getDownstreamNeighbors(mary).contains(frank));
+        assertTrue(listGraph.getDownstreamNeighbors(FRANK).contains(MARY));
+        assertTrue(listGraph.getDownstreamNeighbors(FRANK).contains(BOB));
+        assertTrue(listGraph.getDownstreamNeighbors(BOB).contains(FRANK));
+        assertFalse(listGraph.getDownstreamNeighbors(MARY).contains(FRANK));
     }
 
 }
