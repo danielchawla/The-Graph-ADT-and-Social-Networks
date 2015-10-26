@@ -1,0 +1,20 @@
+query: commonInfluencers 1 2
+<result>
+</result>
+
+query: commonInfluencers 2 3
+<result>
+</result>
+
+query: commonInfluencers 3 2
+<result>
+</result>
+
+query: commonInfluencers 2 1
+<result>
+</result>
+
+query: commonInfluencers 2 3
+<result>
+</result>
+

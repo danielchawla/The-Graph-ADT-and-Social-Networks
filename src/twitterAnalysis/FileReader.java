@@ -46,7 +46,8 @@ public class FileReader {
             
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
-                String[] columns = line.split("->"); // splits data in each line between the "->" characters
+                String[] columns = line.split(" -> "); // splits data in each line between the "->" characters
+                
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
                 

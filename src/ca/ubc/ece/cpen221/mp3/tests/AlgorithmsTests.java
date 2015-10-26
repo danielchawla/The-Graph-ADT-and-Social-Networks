@@ -14,6 +14,11 @@ import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
+/**
+ * JUnit test cases for Algorithms.
+ * 
+ * @author Annabelle Harvey and Daniel Chawla
+ */
 public class AlgorithmsTests {
     private Vertex a = new Vertex("a");
     private Vertex b = new Vertex("b");

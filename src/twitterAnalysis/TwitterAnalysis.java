@@ -74,11 +74,14 @@ public class TwitterAnalysis {
                     System.out.println("Received data successfully.");
                     System.out.println("");
                     
-                    System.out.println("Enter file name to print data to. Make sure to include a .txt at the"
-                            + " end of file name (e.g. filename.txt).");
-                    System.out.println("Also, ensure there is no existing file with that name in current folder"
-                            + " or it will be overwritten.");
-                    String resultFile = console.nextLine().trim();
+                    String resultFile = "";
+                    while (resultFile.length() < 1){ 
+                        System.out.println("Enter file name to print data to. Make sure to include a .txt at the"
+                                + " end of file name (e.g. filename.txt).");
+                        System.out.println("Also, ensure there is no existing file with that name in current folder"
+                                + " or it will be overwritten.");
+                        resultFile = console.nextLine().trim();
+                    }
                     
                     
                     BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(
@@ -106,9 +109,13 @@ public class TwitterAnalysis {
                             fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
                             fileWriter.newLine();
                             fileWriter.write("<result>");
+                            
                             fileWriter.newLine();
                             for (Vertex commonInfluencer : commonInfluencers) {
                                 if (commonInfluencer != null){
+                                    // TODO remove this:
+                                    System.out.println(commonInfluencer);
+                                    System.out.println("ha");
                                     fileWriter.write(TAB + commonInfluencer);
                                     fileWriter.newLine();
                                 }
@@ -121,15 +128,15 @@ public class TwitterAnalysis {
                             
                             // calls algorithm to find min number of retweets before user1's tweet shows up
                             // in user2's feed.
-                            // TODO: is the order of user1 and user2 right?
                             int numRetweets = Algorithms.shortestDistance(listGraph, user1, user2); 
                             
                             // Write results to out file.
-                            fileWriter.write("query: " + COMMONINFLUENCERS + " " + user1 + " " + user2);
+                            fileWriter.write("query: " + NUMRETWEETS + " " + user1 + " " + user2);
                             fileWriter.newLine();
                             fileWriter.write("<result>");
                             fileWriter.newLine();
                             fileWriter.write(numRetweets);
+                            
                             fileWriter.newLine();
                             fileWriter.write("</result>");
                             fileWriter.newLine();
