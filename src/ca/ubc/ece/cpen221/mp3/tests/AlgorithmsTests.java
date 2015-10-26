@@ -106,6 +106,9 @@ public class AlgorithmsTests {
         assertEquals(-1,Algorithms.shortestDistance(testGraph, a, c));
         assertEquals(1,Algorithms.shortestDistance(testGraph, b, a));
         assertEquals(2,Algorithms.shortestDistance(testGraph, c, a));
+        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, b));
+        assertEquals(-1,Algorithms.shortestDistance(testGraph, h, f));
+        assertEquals(3,Algorithms.shortestDistance(testGraph, h, a));
 
     }
     
@@ -138,14 +141,68 @@ public class AlgorithmsTests {
         Set<List<Vertex>> DFSout = Algorithms.depthFirstSearch(testGraph);
         List<Vertex> aExpectedOut = new LinkedList<Vertex>();
         List<Vertex> bExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> sExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> cExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> dExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> eExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> fExpectedOut1 = new LinkedList<Vertex>();
+        List<Vertex> fExpectedOut2 = new LinkedList<Vertex>();
+        List<Vertex> gExpectedOut = new LinkedList<Vertex>();
+        List<Vertex> hExpectedOut1 = new LinkedList<Vertex>();
+        List<Vertex> hExpectedOut2 = new LinkedList<Vertex>();
+        
         aExpectedOut.add(a);
-        System.out.println("aExpectedOut "+aExpectedOut);
         
         bExpectedOut.add(b);
-        aExpectedOut.add(a);
+        bExpectedOut.add(a);
+        
+        sExpectedOut.add(s);
+        sExpectedOut.add(a);
+        
+        cExpectedOut.add(c);
+        cExpectedOut.add(s);
+        cExpectedOut.add(a);
+        
+        dExpectedOut.add(d);
+        dExpectedOut.addAll(cExpectedOut);
+        
+        eExpectedOut.add(e);
+        eExpectedOut.addAll(cExpectedOut);
+        
+        gExpectedOut.add(g);
+        gExpectedOut.addAll(sExpectedOut);
+        
+        fExpectedOut1.add(f);
+        fExpectedOut1.addAll(cExpectedOut);
+        fExpectedOut1.add(g);
+        
+        fExpectedOut2.add(f);
+        fExpectedOut2.addAll(gExpectedOut);
+        fExpectedOut2.add(c);
+        
+        hExpectedOut1.add(h);
+        hExpectedOut1.addAll(eExpectedOut);
+        hExpectedOut1.add(g);
+        
+        hExpectedOut2.add(h);
+        hExpectedOut2.addAll(gExpectedOut);
+        hExpectedOut2.add(e);
+        hExpectedOut2.add(c);
 
-        assert(DFSout.contains(aExpectedOut));
-        assert(DFSout.contains(bExpectedOut));
+        for(List<Vertex> list : DFSout){
+            assert( list.equals(aExpectedOut) || 
+                    list.equals(bExpectedOut) ||
+                    list.equals(cExpectedOut) ||
+                    list.equals(dExpectedOut) ||
+                    list.equals(eExpectedOut) ||
+                    list.equals(gExpectedOut) ||
+                    list.equals(sExpectedOut) ||
+                    list.equals(fExpectedOut1) ||
+                    list.equals(fExpectedOut2) ||
+                    list.equals(hExpectedOut1) ||
+                    list.equals(hExpectedOut2));
+        }
+
     }
 
 }
