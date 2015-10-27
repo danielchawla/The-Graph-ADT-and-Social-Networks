@@ -14,21 +14,23 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 public class Algorithms {
 
     /**
-     * requires: Graph is valid, and both vertices are in the graph.
+     * Finds shortest distance between two vertices in a graph.
      * 
-     * @param graph The graph to search through.
-     * @param a The vertex at which to start the path (twitter case: the tweeter).
-     * @param b The vertex to end at (twitter case: the reader).
+     * Requires: Graph is not null, and both vertices are in the graph.
+     * 
+     * @param graph - the graph to search through.
+     * @param a The vertex at which to start the path.
+     * @param b The vertex to end at.
      * @return the minimum number of edges required to get from a to b. If no
      *         path exists it will return -1. A path from a vertex to itself is
      *         of 0.
      */
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
-        LinkedList<Vertex> queue = new LinkedList<Vertex>();
+        LinkedList<Vertex> vertexQueue = new LinkedList<Vertex>();
         Map<Vertex, Vertex> visitedFrom = new HashMap<Vertex, Vertex>();
-        Vertex currentVSearch = a;
-        Vertex currentVCount = b;
+        Vertex currentVertexSearch = a;
+        Vertex currentVertexCount = b;
         int count = 0;
 
         for (Vertex v : graph.getVertices()) {
@@ -38,18 +40,19 @@ public class Algorithms {
         // initial cases
         visitedFrom.put(a, a);
         visitTable.replace(a, true);
-        queue.add(currentVSearch);
+        vertexQueue.add(currentVertexSearch);
 
-        while (queue.size() != 0) {
-            currentVSearch = queue.remove(0);
-            for (Vertex vertexIndex : graph.getUpstreamNeighbors(currentVSearch)) {
+        while (vertexQueue.size() != 0) {
+            currentVertexSearch = vertexQueue.remove(0);
+            for (Vertex vertexIndex : graph.getUpstreamNeighbors(currentVertexSearch)) {
                 if (!visitTable.get(vertexIndex)) {
                     visitTable.replace(vertexIndex, true);
-                    queue.add(vertexIndex);
-                    visitedFrom.put(vertexIndex, currentVSearch);
+                    vertexQueue.add(vertexIndex);
+                    visitedFrom.put(vertexIndex, currentVertexSearch);
                 }
-                if (vertexIndex.equals(b))
+                if (vertexIndex.equals(b)){
                     break;
+                }
             }
         }
 
@@ -59,18 +62,19 @@ public class Algorithms {
         if (!graph.getUpstreamNeighbors(a).isEmpty()) {
             while (true) {
                 count++;
-                Vertex prevVertex = visitedFrom.get(currentVCount);
+                Vertex prevVertex = visitedFrom.get(currentVertexCount);
                 if (prevVertex.equals(a))
                     break;
-                currentVCount = prevVertex;
+                currentVertexCount = prevVertex;
             }
         }
-
         return count;
     }
 
     /**
-     * requires: Graph is valid.
+     * Performs a breadth first search on a graph.
+     * 
+     * requires: Graph is not null.
      * 
      * @param graph - The graph to traverse.
      * @return A set of lists of vertices. Each list represents the traversal of
@@ -80,18 +84,18 @@ public class Algorithms {
     public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
         Set<List<Vertex>> outputSet = new HashSet<List<Vertex>>();
 
-
         for (Vertex v : graph.getVertices()) {
             outputSet.add(Algorithms.bfsHelper(graph, v));
         }
-
         return outputSet;
     }
 
     /**
-     * requires: Graph is valid.
+     * Performs a depth first search on a graph.
      * 
-     * @param graph The graph to traverse.
+     * requires: Graph is not null.
+     * 
+     * @param graph - The graph to traverse.
      * @return A set of lists of vertices. Each list represents the traversal of
      *         the graph beginning at that vertex ordered according to the 
      *         depth first search algorithm.
@@ -108,11 +112,13 @@ public class Algorithms {
     }
 
     /**
-     * requires: Graph is valid.
+     * Finds common upstream vertices on a graph.
      * 
-     * @param graph The graph to search through.
-     * @param a A vertex in the graph.
-     * @param b A vertex in the graph.
+     * requires: Graph is not null. a and b are vertices in graph.
+     * 
+     * @param graph - The graph to search through.
+     * @param a
+     * @param b
      * @return A list of vertices v such that there is an edge from a to v and from b to v.
      */
     public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
@@ -137,7 +143,9 @@ public class Algorithms {
     }
 
     /**
-     * requires: Graph is valid, both a and be are in the graph.
+     * Finds common upstream vertices on a graph.
+     * 
+     * requires: Graph is not null, both vertices a and be are in the graph.
      * 
      * @param graph The graph to search through.
      * @param a A vertex in the graph.
@@ -165,6 +173,8 @@ public class Algorithms {
     }
 
     /**
+     * Method to help perform depthFirstSearch(Graph graph)
+     * 
      * requires: Graph is valid, v is in the graph.
      * 
      * @param graph The graph to search through.
@@ -173,7 +183,7 @@ public class Algorithms {
      *         the graph beginning at that vertex ordered according to the 
      *         depth first search algorithm.
      */
-    public static List<Vertex> dfsHelper(Graph graph, Vertex v) {
+    public static List<Vertex> dfsHelper(Graph graph, Vertex v) { // we would make this private but needed it public for JUnit test cases.
         List<Vertex> outputList = new LinkedList<Vertex>();
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         Stack<Vertex> stack = new Stack<Vertex>();
@@ -203,6 +213,8 @@ public class Algorithms {
     }
 
     /**
+     * Method to help perform breadthFirstSearch(Graph graph)
+     * 
      * requires: Graph is valid, v is in the graph.
      * 
      * @param graph The graph to search through.
@@ -211,14 +223,14 @@ public class Algorithms {
      *         the graph beginning at that vertex ordered according to the 
      *         breadth first search algorithm.
      */
-    public static List<Vertex> bfsHelper(Graph graph, Vertex v){
+    public static List<Vertex> bfsHelper(Graph graph, Vertex v){ // we would make this private but needed it public for JUnit test cases.
         Map<Vertex, Boolean> visitTable = new HashMap<Vertex, Boolean>();
         List<Vertex> outputList = new LinkedList<Vertex>();
         LinkedList<Vertex> queue = new LinkedList<Vertex>();
         Vertex currentVertex = v;
         
-        for (Vertex vert : graph.getVertices()) {
-            visitTable.put(vert, false);
+        for (Vertex vertex : graph.getVertices()) {
+            visitTable.put(vertex, false);
         }
 
         outputList.add(currentVertex);
@@ -227,12 +239,12 @@ public class Algorithms {
 
         while (queue.size() != 0) {
             currentVertex = queue.removeFirst();
-            for (Vertex indexV : graph.getUpstreamNeighbors(currentVertex)) {
-                queue.add(indexV);
+            for (Vertex indexVertex : graph.getUpstreamNeighbors(currentVertex)) {
+                queue.add(indexVertex);
 
-                if (!visitTable.get(indexV)) {
-                    outputList.add(indexV);
-                    visitTable.replace(indexV, true);
+                if (!visitTable.get(indexVertex)) {
+                    outputList.add(indexVertex);
+                    visitTable.replace(indexVertex, true);
                 }
             }
         }
