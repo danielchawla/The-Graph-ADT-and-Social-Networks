@@ -1,4 +1,3 @@
-**CPEN 221 / Fall 2015: Machine Problem 3**
 The Graph ADT and Social Networks
 ===
 
