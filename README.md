@@ -1,22 +1,5 @@
-**CPEN 221 / Fall 2015: Machine Problem 3**
 The Graph ADT and Social Networks
 ===
-
-### Logistics
-
-+ This is a group assignment and you will be assigned to groups.
-+ This is a 2-week machine problem, and will be due **Oct/26 6pm**.
-+ The weight for this machine problem is 7% of your raw score in the course.
-
-### Background
-
-In this assignment, you will implement a `Graph` interface using two different graph representations. You will then develop several algorithms that use the `Graph` interface that might be used in a social network.
-
-Your goals for this machine problem are to:
-+ Understand and apply the concept of encapsulation;
-+ Understand interfaces;
-+ Understand what graphs are and how they can be represented;
-+ Implement some basic graph algorithms.
 
 ### Instructions
 
