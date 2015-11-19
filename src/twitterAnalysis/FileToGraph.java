@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
@@ -43,7 +45,7 @@ public class FileToGraph {
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(INSTREAM));
             String line;
             
-            LinkedList<Vertex> added = new LinkedList<Vertex>();
+            Set<Vertex> added = new HashSet<Vertex>();
             
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
@@ -55,7 +57,7 @@ public class FileToGraph {
                 
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
-                
+
                 if(!added.contains(follower)){
                     adjacencyGraph.addVertex(follower);
                     added.add(follower);
@@ -97,7 +99,6 @@ public class FileToGraph {
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(INSTREAM));
             String line;            
             LinkedList<Vertex> added = new LinkedList<Vertex>();
-            
 
             // main loop that fills adjacency graph as iterating through file line by line.
             while ((line = fileReader.readLine()) != null){
@@ -106,7 +107,6 @@ public class FileToGraph {
                 // removes unnecessary white space
                 columns[FOLLOWER] = columns[FOLLOWER].trim();
                 columns[FOLLOWING] = columns[FOLLOWING].trim();
-                
                 Vertex follower = new Vertex(columns[FOLLOWER]);
                 Vertex following = new Vertex(columns[FOLLOWING]);
                 

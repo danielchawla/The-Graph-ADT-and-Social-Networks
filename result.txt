@@ -1,0 +1,18 @@
+query: commonInfluencers 21158690 15853668
+<result>
+</result>
+
+query: numRetweets 290778913 290778913
+<result>
+    0
+</result>
+
+query: numRetweets 308763735 24081780
+<result>
+    Tweet will never reach user 24081780.
+</result>
+
+query: commonInfluencers 308763735 24081780
+<result>
+</result>
+
